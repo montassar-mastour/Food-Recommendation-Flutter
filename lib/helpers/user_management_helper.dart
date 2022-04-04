@@ -1,5 +1,6 @@
 import 'package:openfoodfacts/openfoodfacts.dart';
-import 'package:openfoodfacts/utils/OpenFoodAPIConfiguration.dart';
+import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
+import 'package:smooth_app/Data_Base_Api/user_management.dart';
 import 'package:smooth_app/database/dao_secured_string.dart';
 
 class UserManagementHelper {
@@ -20,10 +21,10 @@ class UserManagementHelper {
   static final RegExp _userRegex = RegExp(_userPattern);
 
   /// Checks credentials and conditionally saves them
-  static Future<bool> login(User user) async {
+  static Future<bool> login(UserManagement user) async {
     final bool rightCredentials;
     try {
-      rightCredentials = await OpenFoodAPIClient.login(user);
+      rightCredentials = await DataBaseConfiguration.login(user) ;
     } catch (e) {
       throw Exception(e);
     }
@@ -36,8 +37,8 @@ class UserManagementHelper {
   }
 
   /// Puts the [User] in the preferences
-  static Future<void> put(User user) async {
-    OpenFoodAPIConfiguration.globalUser = user;
+  static Future<void> put(UserManagement user) async {
+    DataBaseConfiguration.user =user;
     await _putUser(user);
   }
 
@@ -49,10 +50,8 @@ class UserManagementHelper {
     if (userId == null || password == null) {
       return;
     }
-
-    final User user = User(userId: userId, password: password);
-
-    OpenFoodAPIConfiguration.globalUser = user;
+final UserManagement user = UserManagement(email: userId, password: password);
+    DataBaseConfiguration.user = user;
   }
 
   /// Checks if the saved credentials are still correct
@@ -64,17 +63,17 @@ class UserManagementHelper {
       return false;
     }
 
-    final User user = User(userId: userId, password: password);
+ final UserManagement user = UserManagement(email: userId, password: password);
 
     final bool rightCredentials;
     try {
-      rightCredentials = await OpenFoodAPIClient.login(user);
+      rightCredentials = await DataBaseConfiguration.login(user);
     } catch (e) {
       throw Exception(e);
     }
 
     if (rightCredentials) {
-      OpenFoodAPIConfiguration.globalUser = user;
+      DataBaseConfiguration.user = user;
     }
 
     return rightCredentials;
@@ -82,7 +81,7 @@ class UserManagementHelper {
 
   /// Deletes saved credentials from storage
   static Future<bool> logout() async {
-    OpenFoodAPIConfiguration.globalUser = null;
+    DataBaseConfiguration.user = UserManagement(email: '', password: '');
     DaoSecuredString.remove(key: _USER_ID);
     DaoSecuredString.remove(key: _PASSWORD);
     final bool contains = await credentialsInStorage();
@@ -90,10 +89,10 @@ class UserManagementHelper {
   }
 
   /// Saves user to storage
-  static Future<void> _putUser(User user) async {
+  static Future<void> _putUser(UserManagement user) async {
     await DaoSecuredString.put(
       key: _USER_ID,
-      value: user.userId,
+      value: user.email,
     );
     await DaoSecuredString.put(
       key: _PASSWORD,
