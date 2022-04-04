@@ -19,11 +19,13 @@ static Future <bool>login(UserManagement user) async{
    const String key='subdomain';
     const String filename='login.php';
     const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename;
+    
     http.Response response = await http.post(Uri.parse(url),body: {
        'email': user.email,
        'password': user.password
     });
- return response.body.toString()!=false;
+    print(response.body.toString());
+ return response.body.toString()!='false';
   
   }
 
