@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_app/Data_Base_Api/user_management.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_card.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_text_form_field.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
@@ -42,8 +42,8 @@ class _LoginPageState extends State<LoginPage> {
     });
 
     final bool login = await UserManagementHelper.login(
-      User(
-        userId: userIdController.text,
+      UserManagement(
+        email: userIdController.text,
         password: passwordController.text,
       ),
     );
@@ -218,16 +218,16 @@ class _LoginPageState extends State<LoginPage> {
                     height: size.height * 0.06,
                     child: OutlinedButton(
                       onPressed: () async {
-                        final bool? registered = await Navigator.push<bool>(
-                          context,
-                          MaterialPageRoute<bool>(
-                            builder: (BuildContext context) =>
-                                const SignUpPage(),
-                          ),
-                        );
-                        if (registered == true) {
-                          Navigator.of(context).pop();
-                        }
+                        // final bool? registered = await Navigator.push<bool>(
+                        //   context,
+                        //   MaterialPageRoute<bool>(
+                        //     builder: (BuildContext context) =>
+                        //         const SignUpPage(),
+                        //   ),
+                        // );
+                        // if (registered == true) {
+                        //   Navigator.of(context).pop();
+                        // }
                       },
                       child: Text(
                         appLocalizations.create_account,
