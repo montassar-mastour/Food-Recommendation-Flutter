@@ -1,7 +1,11 @@
+// ignore_for_file: always_specify_types
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
+import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
+import 'package:smooth_app/Data_Base_Api/user_management.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_text_form_field.dart';
@@ -23,14 +27,19 @@ class _SignUpPageState extends State<SignUpPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _displayNameController = TextEditingController();
+  final TextEditingController _displayLastNameController = TextEditingController();
+  final TextEditingController _displayAgeController = TextEditingController();
+  final TextEditingController _displayLengthController = TextEditingController();
+  final TextEditingController _displayWeightController = TextEditingController();
+  final TextEditingController _displayFRController = TextEditingController();
+ final TextEditingController _displayAllergyController = TextEditingController();
+ final TextEditingController _displayAnotherAllergyController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _userController = TextEditingController();
   final TextEditingController _password1Controller = TextEditingController();
   final TextEditingController _password2Controller = TextEditingController();
   final TextEditingController _brandController = TextEditingController();
 
-  bool _foodProducer = false;
-  bool _agree = false;
+
   bool _subscribe = false;
   bool _disagreed = false;
 
@@ -74,6 +83,99 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             const SizedBox(height: space),
             SmoothTextFormField(
+              textInputType: TextInputType.name,
+              type: TextFieldTypes.PLAIN_TEXT,
+              controller: _displayLastNameController,
+              textInputAction: TextInputAction.next,
+              hintText: 'Last Name',
+              prefixIcon: const Icon(Icons.person),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the display Last name you want to use';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: space),
+            SmoothTextFormField(
+              type: TextFieldTypes.PLAIN_TEXT,
+              controller: _displayAgeController,
+              textInputAction: TextInputAction.next,
+              hintText: 'Age',
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the display Age you want to use';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: space),
+            SmoothTextFormField(
+              type: TextFieldTypes.PLAIN_TEXT,
+              controller: _displayLengthController,
+              textInputAction: TextInputAction.next,
+              hintText: 'Length',
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the display Length you want to use';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: space),
+            SmoothTextFormField(
+              type: TextFieldTypes.PLAIN_TEXT,
+              controller: _displayWeightController,
+              textInputAction: TextInputAction.next,
+              hintText: 'Weight',
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the display Weight you want to use';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: space),
+             SmoothTextFormField(
+              type: TextFieldTypes.PLAIN_TEXT,
+              controller: _displayFRController,
+              textInputAction: TextInputAction.next,
+              hintText: 'food restraction',
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the display food restraction you want to use';
+                }
+                return null;
+              },
+            ),
+               const SizedBox(height: space),
+             SmoothTextFormField(
+              type: TextFieldTypes.PLAIN_TEXT,
+              controller: _displayAllergyController,
+              textInputAction: TextInputAction.next,
+              hintText: 'Allergy',
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the display Allergy you want to use';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: space),
+             SmoothTextFormField(
+              type: TextFieldTypes.PLAIN_TEXT,
+              controller: _displayAnotherAllergyController,
+              textInputAction: TextInputAction.next,
+              hintText: 'Another Allergy',
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the display Another Allergy you want to use';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: space),
+            SmoothTextFormField(
               textInputType: TextInputType.emailAddress,
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _emailController,
@@ -91,24 +193,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 return null;
               },
             ),
-            const SizedBox(height: space),
-            SmoothTextFormField(
-              type: TextFieldTypes.PLAIN_TEXT,
-              controller: _userController,
-              textInputAction: TextInputAction.next,
-              hintText: appLocalizations.sign_up_page_username_hint,
-              prefixIcon: const Icon(Icons.person),
-              autofillHints: const <String>[AutofillHints.username],
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return appLocalizations.sign_up_page_username_error_empty;
-                }
-                if (!UserManagementHelper.isUsernameValid(value)) {
-                  return appLocalizations.sign_up_page_username_error_invalid;
-                }
-                return null;
-              },
-            ),
+           
             const SizedBox(height: space),
             SmoothTextFormField(
               type: TextFieldTypes.PASSWORD,
@@ -149,97 +234,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 return null;
               },
             ),
+    
             const SizedBox(height: space),
-            Text(appLocalizations.sign_up_page_username_description),
-            const SizedBox(height: space),
-            // careful with CheckboxListTile and hyperlinks
-            // cf. https://github.com/flutter/flutter/issues/31437
-            ListTile(
-              leading: Checkbox(
-                value: _agree,
-                onChanged: (final bool? value) {
-                  if (value != null) {
-                    setState(() => _agree = value);
-                  }
-                },
-              ),
-              title: RichText(
-                text: TextSpan(
-                  children: <InlineSpan>[
-                    // TODO(monsieurtanuki): refactor / translate
-                    TextSpan(
-                      text: 'I agree to the Open Food Facts ',
-                      style: TextStyle(color: theme.colorScheme.onBackground),
-                    ),
-                    TextSpan(
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
-                      ),
-                      text: 'terms of use and contribution',
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () async {
-                          final String url =
-                              appLocalizations.sign_up_page_agree_url;
-                          if (await canLaunch(url)) {
-                            await launch(
-                              url,
-                              forceSafariVC: false,
-                            );
-                          }
-                        },
-                    ),
-                  ],
-                ),
-              ),
-              subtitle: !_disagreed
-                  ? null
-                  : Text(
-                      appLocalizations.sign_up_page_agree_error_invalid,
-                      style: TextStyle(color: theme.errorColor),
-                    ),
-            ),
-            const SizedBox(height: space),
-            ListTile(
-              leading: Checkbox(
-                value: _foodProducer,
-                onChanged: (final bool? value) {
-                  if (value != null) {
-                    setState(() => _foodProducer = value);
-                  }
-                },
-              ),
-              title: Text(appLocalizations.sign_up_page_producer_checkbox),
-            ),
-            if (_foodProducer) ...<Widget>[
-              const SizedBox(height: space),
-              SmoothTextFormField(
-                type: TextFieldTypes.PLAIN_TEXT,
-                controller: _brandController,
-                textInputAction: TextInputAction.next,
-                hintText: appLocalizations.sign_up_page_producer_hint,
-                prefixIcon: const Icon(Icons.person),
-                autofillHints: const <String>[AutofillHints.name],
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return appLocalizations.sign_up_page_producer_error_empty;
-                  }
-                  return null;
-                },
-              )
-            ],
-            const SizedBox(height: space),
-            ListTile(
-              leading: Checkbox(
-                value: _subscribe,
-                onChanged: (final bool? value) {
-                  if (value != null) {
-                    setState(() => _subscribe = value);
-                  }
-                },
-              ),
-              title: Text(appLocalizations.sign_up_page_subscribe_checkbox),
-            ),
+
             const SizedBox(height: space),
             ElevatedButton(
               onPressed: () async => _signUp(),
@@ -268,34 +265,15 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> _signUp() async {
-    _disagreed = !_agree;
     setState(() {});
-    if (!_formKey.currentState!.validate() || _disagreed) {
+    if (!_formKey.currentState!.validate() ) {
       return;
     }
-    final User user = User(
-      userId: _userController.text,
+    final UserManagement user = UserManagement(
+      email: _emailController.text,
       password: _password1Controller.text,
     );
-    final Status? status = await LoadingDialog.run<Status>(
-      context: context,
-      future: OpenFoodAPIClient.register(
-        user: user,
-        name: _displayNameController.text,
-        email: _emailController.text,
-        newsletter: _subscribe,
-        orgName: _foodProducer ? _brandController.text : null,
-      ),
-      title: AppLocalizations.of(context)!.sign_up_page_action_doing_it,
-    );
-    if (status == null) {
-      // probably the end user stopped the dialog
-      return;
-    }
-    if (status.error != null) {
-      await LoadingDialog.error(context: context, title: status.error);
-      return;
-    }
+   DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_displayFRController.text,_displayAllergyController.text,_displayAnotherAllergyController.text,_emailController.text,_password1Controller.text,_emailController.text]);
     await UserManagementHelper.put(user);
     await showDialog<void>(
       context: context,
