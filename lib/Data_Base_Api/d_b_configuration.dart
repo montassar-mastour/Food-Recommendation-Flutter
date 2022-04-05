@@ -19,12 +19,10 @@ static Future <bool>login(UserManagement user) async{
    const String key='subdomain';
     const String filename='login.php';
     const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename;
-    
     http.Response response = await http.post(Uri.parse(url),body: {
        'email': user.email,
        'password': user.password
     });
-    print(response.body.toString());
  return response.body.toString()!='false';
   
   }
@@ -35,16 +33,16 @@ static Future <bool>login(UserManagement user) async{
     const String filename='add.php';
     const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename;
     http.post(Uri.parse(url),body: {
-     'name':  attribute[1],
-      'last_name': attribute[2],
-      'age': attribute[3],
-      'length': attribute[4],
-     'weight': attribute[5],
-    'food_restraction':  attribute[6],
-    'allergy':  attribute[7],
-    'another_allergy':  attribute[8],
-    'email':  attribute[9],
-    'password' : attribute[10],
+     'name':  attribute[0],
+      'last_name': attribute[1],
+      'age': attribute[2],
+      'length': attribute[3],
+     'weight': attribute[4],
+    'food_restraction':  attribute[5],
+    'allergy':  attribute[6],
+    'another_allergy':  attribute[7],
+    'email':  attribute[8],
+    'password' : attribute[9],
     'location' : 'kairouan'
     
     });
