@@ -218,16 +218,16 @@ class _LoginPageState extends State<LoginPage> {
                     height: size.height * 0.06,
                     child: OutlinedButton(
                       onPressed: () async {
-                        // final bool? registered = await Navigator.push<bool>(
-                        //   context,
-                        //   MaterialPageRoute<bool>(
-                        //     builder: (BuildContext context) =>
-                        //         const SignUpPage(),
-                        //   ),
-                        // );
-                        // if (registered == true) {
-                        //   Navigator.of(context).pop();
-                        // }
+                        final bool? registered = await Navigator.push<bool>(
+                          context,
+                          MaterialPageRoute<bool>(
+                            builder: (BuildContext context) =>
+                                const SignUpPage(),
+                          ),
+                        );
+                        if (registered == true) {
+                          Navigator.of(context).pop();
+                        }
                       },
                       child: Text(
                         appLocalizations.create_account,
