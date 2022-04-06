@@ -50,7 +50,7 @@ static Future <bool>login(UserManagement user) async{
     'another_allergy':  attribute[7],
     'email':  attribute[8],
     'password' : attribute[9],
-    'location' : 'kairouan'
+    'location' : attribute[10]
     
     });
     

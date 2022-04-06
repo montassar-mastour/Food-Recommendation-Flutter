@@ -1,8 +1,11 @@
-// ignore_for_file: always_specify_types
+// ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:geocoding/geocoding.dart' as pre ;
+import 'package:location/location.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/Data_Base_Api/user_management.dart';
@@ -265,15 +268,42 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   Future<void> _signUp() async {
+     
     setState(() {});
     if (!_formKey.currentState!.validate() ) {
       return;
     }
+    Location location = new Location();
+
+bool _serviceEnabled;
+PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+        _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+    _serviceEnabled = await location.requestService();
+    if (!_serviceEnabled) {
+    return;
+   }
+   }
+
+   _permissionGranted = await location.hasPermission();
+   if (_permissionGranted == PermissionStatus.denied) {
+  _permissionGranted = await location.requestPermission();
+  if (_permissionGranted != PermissionStatus.granted) {
+    return;
+  }
+  }
+
+   _locationData = await location.getLocation();
+
+   List<pre.Placemark> placemarks = await pre.placemarkFromCoordinates(_locationData.latitude!.toDouble(),_locationData.longitude!.toDouble());
+  final String local = placemarks.toList().first.country.toString()+',' + placemarks.toList().first.administrativeArea.toString() ;
     final UserManagement user = UserManagement(
       email: _emailController.text,
       password: _password1Controller.text,
     );
-   DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_displayFRController.text,_displayAllergyController.text,_displayAnotherAllergyController.text,_emailController.text,_password1Controller.text,_emailController.text]);
+   DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_displayFRController.text,_displayAllergyController.text,_displayAnotherAllergyController.text,_emailController.text,_password1Controller.text,local]);
     await UserManagementHelper.put(user);
     await showDialog<void>(
       context: context,
