@@ -38,7 +38,7 @@ class UserManagementHelper {
 
   /// Puts the [User] in the preferences
   static Future<void> put(UserManagement user) async {
-    DataBaseConfiguration.user =user;
+    DataBaseConfiguration.user = user;
     await _putUser(user);
   }
 
@@ -81,7 +81,7 @@ final UserManagement user = UserManagement(email: userId, password: password);
 
   /// Deletes saved credentials from storage
   static Future<bool> logout() async {
-    DataBaseConfiguration.user = UserManagement(email: '', password: '');
+    DataBaseConfiguration.user = null;
     DaoSecuredString.remove(key: _USER_ID);
     DaoSecuredString.remove(key: _PASSWORD);
     final bool contains = await credentialsInStorage();

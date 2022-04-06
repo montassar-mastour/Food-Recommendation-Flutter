@@ -1,13 +1,15 @@
+// ignore_for_file: always_specify_types
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:openfoodfacts/utils/OpenFoodAPIConfiguration.dart';
+import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
-import 'package:smooth_app/helpers/launch_url_helper.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
 import 'package:smooth_app/pages/onboarding/country_selector.dart';
+import 'package:smooth_app/pages/profil_pages/profil.dart';
 import 'package:smooth_app/pages/user_management/login_page.dart';
 
 /// Collapsed/expanded display of profile for the preferences page.
@@ -44,23 +46,34 @@ class UserPreferencesProfile extends AbstractUserPreferences {
 
   @override
   List<Widget> getBody() {
+    
     final ThemeData theme = Theme.of(context);
     final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     final Size size = MediaQuery.of(context).size;
 
     final List<Widget> result = <Widget>[];
-
+        
     //Credentials exist
-    if (OpenFoodAPIConfiguration.globalUser != null) {
       result.add(
-        Row(
+        FutureBuilder<bool>(  
+                 future:UserManagementHelper.credentialsInStorage(),
+        builder:(context,snapshot){
+       // ignore: always_put_control_body_on_new_line, avoid_print
+       if(snapshot.hasError) print(snapshot.error);
+        if( snapshot.hasData) 
+        {
+          if(DataBaseConfiguration.user != null){
+          return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             ElevatedButton.icon(
-              onPressed: () => LaunchUrlHelper.launchURL(
-                'https://openfoodfacts.org/editor/${OpenFoodAPIConfiguration.globalUser!.userId}',
-                true,
-              ),
+              onPressed: () =>   Navigator.push(
+                        context,
+                        MaterialPageRoute<Widget>(
+                          builder: (BuildContext context) =>
+                              const ProfilPage(),
+                        ),
+                      ),
               label: Text(
                 appLocalizations.view_profile,
                 style: theme.textTheme.bodyText2?.copyWith(
@@ -101,12 +114,10 @@ class UserPreferencesProfile extends AbstractUserPreferences {
               ),
             ),
           ],
-        ),
-      );
-    } else {
-      // No credentials
-      result.add(
-        Center(
+        );
+}
+else{
+return Center(
           child: ElevatedButton(
             onPressed: () async {
               await Navigator.push<dynamic>(
@@ -135,9 +146,14 @@ class UserPreferencesProfile extends AbstractUserPreferences {
               ),
             ),
           ),
-        ),
-      );
-    }
+        );
+}
+        }else{
+          return const CircularProgressIndicator();}
+        }));
+        
+      
+  
 
     result.addAll(
       <Widget>[

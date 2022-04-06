@@ -4,15 +4,22 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:smooth_app/Data_Base_Api/user_management.dart';
+import 'package:smooth_app/database/dao_secured_string.dart';
 // ignore: avoid_classes_with_only_static_members
 class DataBaseConfiguration 
 {
-  static Future <List<dynamic>>getData() async{
+
+  static Future <Map<String, dynamic>> getData() async{
+     final String? email = await DaoSecuredString.get('user_id');
+    final String? password = await DaoSecuredString.get('pasword');
    const String key='subdomain';
     const String filename='get.php';
     const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename;
-    http.Response response = await http.get(Uri.parse(url));
-    return jsonDecode(response.body) as List<dynamic>;
+      http.Response response = await http.post(Uri.parse(url),body: {
+       'email': email,
+       'password': password
+    }); 
+    return jsonDecode(response.body) as Map<String, dynamic>;
    
   }
 static Future <bool>login(UserManagement user) async{
@@ -68,6 +75,6 @@ static Future <bool>login(UserManagement user) async{
     
     });
     }
-  static late UserManagement user ; 
-   
+  static UserManagement? user  ; 
+  
 }
