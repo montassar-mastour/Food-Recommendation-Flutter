@@ -14,7 +14,7 @@ class UserPreferences extends ChangeNotifier {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     return UserPreferences._shared(preferences);
   }
-
+   static const String _TAG_PREFIX_WHO = 'WHO_AS_STRING';
   static const String _TAG_PREFIX_IMPORTANCE = 'IMPORTANCE_AS_STRING';
   static const String _TAG_INIT = 'init';
   static const String _TAG_THEME_DARK = 'themeDark';
@@ -33,6 +33,18 @@ class UserPreferences extends ChangeNotifier {
     await productPreferences.resetImportances();
     await _sharedPreferences.setBool(_TAG_INIT, true);
   }
+    String _getWHOTag(final String variable) =>
+      _TAG_PREFIX_WHO + variable;
+    String getWHO(final String attributeId) =>
+      _sharedPreferences.getString(_getWHOTag(attributeId)) ??
+      '';
+    Future<void> setWHO(
+    final String attributeId,
+    final String howId,
+  ) async =>
+      _sharedPreferences.setString(
+          _getWHOTag(attributeId), howId);   
+
 
   String _getImportanceTag(final String variable) =>
       _TAG_PREFIX_IMPORTANCE + variable;
