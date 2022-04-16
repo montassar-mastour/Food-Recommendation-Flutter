@@ -120,8 +120,9 @@ class SearchCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            // ignore: prefer_const_constructors
             Text(
-              localizations.welcomeToOpenFoodFacts,
+              'welcome',
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 36.0,
