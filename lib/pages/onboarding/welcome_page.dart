@@ -28,49 +28,49 @@ class WelcomePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              const Spacer(flex: 1),
+              const Spacer(flex: 3),
               Flexible(
-                flex: 4,
-                child: Text(appLocalizations.whatIsOff, style: headlineStyle),
+                flex: 6,
+                child: Text('                 Welcome', style: headlineStyle,textAlign: TextAlign.center),
               ),
               Flexible(
                 flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: SMALL_SPACE),
-                      child: Text(
-                        appLocalizations.country_chooser_label,
-                        style: bodyTextStyle,
-                      ),
-                    ),
-                    CountrySelector(
-                      initialCountryCode: WidgetsBinding
-                          .instance?.window.locale.countryCode
-                          ?.toLowerCase(),
-                      padding: const EdgeInsets.only(
-                        top: MEDIUM_SPACE,
-                        bottom: LARGE_SPACE,
-                      ),
-                      inputDecoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color.fromARGB(255, 235, 235, 235)),
-                          borderRadius: BorderRadius.circular(VERY_LARGE_SPACE),
-                        ),
-                        filled: Theme.of(context).colorScheme.brightness ==
-                            Brightness.light,
-                        fillColor: const Color.fromARGB(255, 235, 235, 235),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: SMALL_SPACE),
-                      child: Text(
-                        appLocalizations.country_selection_explanation,
-                        style: bodyTextStyle,
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: SMALL_SPACE),
+                    //   child: Text(
+                    //     appLocalizations.country_chooser_label,
+                    //     style: bodyTextStyle,
+                    //   ),
+                    // ),
+                    // CountrySelector(
+                    //   initialCountryCode: WidgetsBinding
+                    //       .instance?.window.locale.countryCode
+                    //       ?.toLowerCase(),
+                    //   padding: const EdgeInsets.only(
+                    //     top: MEDIUM_SPACE,
+                    //     bottom: LARGE_SPACE,
+                    //   ),
+                    //   inputDecoration: InputDecoration(
+                    //     enabledBorder: OutlineInputBorder(
+                    //       borderSide: const BorderSide(
+                    //           color: Color.fromARGB(255, 235, 235, 235)),
+                    //       borderRadius: BorderRadius.circular(VERY_LARGE_SPACE),
+                    //     ),
+                    //     filled: Theme.of(context).colorScheme.brightness ==
+                    //         Brightness.light,
+                    //     fillColor: const Color.fromARGB(255, 235, 235, 235),
+                    //   ),
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: SMALL_SPACE),
+                    //   child: Text(
+                    //     appLocalizations.country_selection_explanation,
+                    //     style: bodyTextStyle,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

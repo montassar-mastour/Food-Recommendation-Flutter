@@ -32,7 +32,7 @@ class OnboardingFlowNavigator {
       case OnboardingPage.WELCOME:
         return OnboardingPage.SCAN_EXAMPLE;
       case OnboardingPage.SCAN_EXAMPLE:
-        return OnboardingPage.HEALTH_CARD_EXAMPLE;
+        return OnboardingPage.PREFERENCES_PAGE;
       case OnboardingPage.HEALTH_CARD_EXAMPLE:
         return OnboardingPage.ECO_CARD_EXAMPLE;
       case OnboardingPage.ECO_CARD_EXAMPLE:
