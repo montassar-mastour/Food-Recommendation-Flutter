@@ -1,20 +1,16 @@
-// ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings
+// ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings, non_constant_identifier_names, avoid_void_async
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:geocoding/geocoding.dart' as pre ;
 import 'package:location/location.dart';
-import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/Data_Base_Api/user_management.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_text_form_field.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
-import 'package:smooth_app/widgets/loading_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Sign Up Page. Pop's true if the sign up was successful.
 class SignUpPage extends StatefulWidget {
@@ -40,11 +36,6 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _password1Controller = TextEditingController();
   final TextEditingController _password2Controller = TextEditingController();
-  final TextEditingController _brandController = TextEditingController();
-
-
-  bool _subscribe = false;
-  bool _disagreed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +65,8 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayNameController,
               textInputAction: TextInputAction.next,
-              hintText: appLocalizations.sign_up_page_display_name_hint,
-              prefixIcon: const Icon(Icons.person),
+              hintText: 'First Name',
+              // prefixIcon: const Icon(Icons.person),
               autofillHints: const <String>[AutofillHints.name],
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -91,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayLastNameController,
               textInputAction: TextInputAction.next,
               hintText: 'Last Name',
-              prefixIcon: const Icon(Icons.person),
+              // prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display Last name you want to use';
@@ -143,7 +134,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayFRController,
               textInputAction: TextInputAction.next,
-              hintText: 'food restraction',
+              hintText: 'food restriction',
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display food restraction you want to use';
@@ -184,15 +175,15 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _emailController,
               textInputAction: TextInputAction.next,
               hintText: appLocalizations.sign_up_page_email_hint,
-              prefixIcon: const Icon(Icons.person),
+              // prefixIcon: const Icon(Icons.person),
               autofillHints: const <String>[AutofillHints.email],
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return appLocalizations.sign_up_page_email_error_empty;
                 }
-                if (!UserManagementHelper.isEmailValid(value)) {
-                  return appLocalizations.sign_up_page_email_error_invalid;
-                }
+                // if (!UserManagementHelper.isEmailValid(value)) {
+                //   return appLocalizations.sign_up_page_email_error_invalid;
+                // }
                 return null;
               },
             ),
@@ -203,7 +194,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _password1Controller,
               textInputAction: TextInputAction.next,
               hintText: appLocalizations.sign_up_page_password_hint,
-              prefixIcon: const Icon(Icons.vpn_key),
+              // prefixIcon: const Icon(Icons.vpn_key),
               autofillHints: const <String>[AutofillHints.password],
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -221,7 +212,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _password2Controller,
               textInputAction: TextInputAction.next,
               hintText: appLocalizations.sign_up_page_confirm_password_hint,
-              prefixIcon: const Icon(Icons.vpn_key),
+              // prefixIcon: const Icon(Icons.vpn_key),
               autofillHints: const <String>[
                 AutofillHints.password,
               ],
@@ -305,6 +296,8 @@ PermissionStatus _permissionGranted;
     );
    DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_displayFRController.text,_displayAllergyController.text,_displayAnotherAllergyController.text,_emailController.text,_password1Controller.text,local]);
     await UserManagementHelper.put(user);
+  _saveAllergyData();
+
     await showDialog<void>(
       context: context,
       builder: (BuildContext context) => SmoothAlertDialog(
@@ -317,5 +310,10 @@ PermissionStatus _permissionGranted;
       ),
     );
     Navigator.of(context).pop<bool>(true);
+  }
+
+  void _saveAllergyData() async {
+       final Map<String,dynamic> Data = await DataBaseConfiguration.getData();
+   DataBaseConfiguration.addDataAllergy(Data['id'].toString());
   }
 }
