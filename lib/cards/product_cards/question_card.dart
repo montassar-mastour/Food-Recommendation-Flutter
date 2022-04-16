@@ -356,13 +356,13 @@ class _QuestionCardState extends State<QuestionCard>
                       InkWell(
                         onTap: () async {
                           Navigator.pop<Widget>(context);
-                          await Navigator.push<Widget>(
-                            context,
-                            MaterialPageRoute<Widget>(
-                              builder: (BuildContext context) =>
-                                  const LoginPage(),
-                            ),
-                          );
+                          // await Navigator.push<Widget>(
+                          //   context,
+                          //   MaterialPageRoute<Widget>(
+                          //     builder: (BuildContext context) =>
+                          //          LoginPage(),
+                          //   ),
+                          // );
                         },
                         child: Container(
                           decoration: const BoxDecoration(

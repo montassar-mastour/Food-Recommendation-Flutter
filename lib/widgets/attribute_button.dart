@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:openfoodfacts/model/Attribute.dart';
 import 'package:openfoodfacts/model/AttributeGroup.dart';
 import 'package:openfoodfacts/personalized_search/preference_importance.dart';
-import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
@@ -62,8 +61,6 @@ class AttributeButton extends StatelessWidget {
                 productPreferences
                     .getPreferenceImportanceFromImportanceId(importanceId)!
                     .name!,
-                
-                    
                 style: style.copyWith(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
@@ -134,14 +131,5 @@ void _confirm_who(BuildContext context,String importanceId) {
     );
 
   }
-
-  void _continuous(BuildContext context,String importanceId)async {
-    
-               
-                
-                
-  }
-
-
 
 }
