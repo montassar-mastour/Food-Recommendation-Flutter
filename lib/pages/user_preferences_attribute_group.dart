@@ -84,7 +84,7 @@ class UserPreferencesAttributeGroup extends AbstractUserPreferences {
     result.addAll(
       List<Widget>.generate(
         attributes.length,
-        (int index) => AttributeButton(attributes[index]),
+        (int index) => AttributeButton(attributes[index], productPreferences,userPreferences),
       ),
     );
     return result;
