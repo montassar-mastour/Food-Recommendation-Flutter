@@ -1,3 +1,5 @@
+// ignore_for_file: curly_braces_in_flow_control_structures, always_put_control_body_on_new_line
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:openfoodfacts/model/Attribute.dart';
@@ -38,11 +40,13 @@ class UserPreferencesAttributeGroup extends AbstractUserPreferences {
   String getPreferenceFlagKey() => 'attribute:${group.id}';
 
   @override
-  Widget getTitle() => Text(
-        group.name ?? appLocalizations.unknown,
-        style: themeData.textTheme.headline6,
-      );
-
+  Widget getTitle() {
+       if(group.name == 'Allergens' )
+    return Text('Hassassia' , style: themeData.textTheme.headline6) ;
+       else if(group.name != null)
+    return Text( group.name! , style: themeData.textTheme.headline6);
+        else  return Text(appLocalizations.unknown,style: themeData.textTheme.headline6);
+     }
   @override
   Widget? getSubtitle() => null;
 
@@ -80,7 +84,7 @@ class UserPreferencesAttributeGroup extends AbstractUserPreferences {
     result.addAll(
       List<Widget>.generate(
         attributes.length,
-        (int index) => AttributeButton(attributes[index], productPreferences),
+        (int index) => AttributeButton(attributes[index]),
       ),
     );
     return result;
