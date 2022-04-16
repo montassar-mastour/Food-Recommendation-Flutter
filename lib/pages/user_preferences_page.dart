@@ -33,6 +33,7 @@ class _UserPreferencesPageState extends State<UserPreferencesPage> {
         setState: setState,
         context: context,
         userPreferences: userPreferences,
+        productPreferences: productPreferences, 
         appLocalizations: appLocalizations,
         themeData: themeData,
       ),

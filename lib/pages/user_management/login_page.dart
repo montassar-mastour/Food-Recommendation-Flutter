@@ -1,22 +1,32 @@
+// ignore_for_file: avoid_void_async, non_constant_identifier_names, unnecessary_brace_in_string_interps
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:openfoodfacts/model/Attribute.dart';
+import 'package:openfoodfacts/model/AttributeGroup.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/Data_Base_Api/user_management.dart';
+import 'package:smooth_app/data_models/product_preferences.dart';
+import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_card.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_text_form_field.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
 import 'package:smooth_app/pages/user_management/forgot_password_page.dart';
 import 'package:smooth_app/pages/user_management/sign_up_page.dart';
 import 'package:smooth_app/themes/theme_provider.dart';
-
 // TODO(M123-dev): Handle colors better
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  // ignore: prefer_const_constructors_in_immutables
+  LoginPage({Key? key, required this.userPreferences , required this.productPreferences}) : super(key: key);
+  final UserPreferences userPreferences;
+  final ProductPreferences productPreferences;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
+
 
 class _LoginPageState extends State<LoginPage> {
   static const Color _customGrey = Colors.grey;
@@ -25,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _runningQuery = false;
   bool _wrongCredentials = false;
-
+   
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController userIdController = TextEditingController();
@@ -49,6 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (login) {
+     update_local(context);
       Navigator.pop(context);
     } else {
       setState(() {
@@ -262,4 +273,19 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void update_local(BuildContext context)async {
+        
+         final AttributeGroup group= widget.productPreferences.getAttributeGroup('allergens_no_gluten');
+     final Map<String, dynamic> get_user = await DataBaseConfiguration.getData();
+    final Map<String,dynamic> get =  await DataBaseConfiguration.getDataAllergy(get_user['id'].toString());
+   
+     Attribute attributt;
+     for(attributt in group.attributes!){
+                 widget.userPreferences.setImportance(attributt.id.toString(), get[attributt.id].toString()) ;
+                 widget.userPreferences.setWHO(attributt.id.toString(), get['who_${attributt.id}'].toString() );
+                  }
+                  widget.productPreferences.notify();
+                  
+ }
 }

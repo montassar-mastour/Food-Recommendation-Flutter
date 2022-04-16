@@ -2,19 +2,21 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
+import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
-import 'package:smooth_app/pages/onboarding/country_selector.dart';
 import 'package:smooth_app/pages/profil_pages/profil.dart';
 import 'package:smooth_app/pages/user_management/login_page.dart';
 
 /// Collapsed/expanded display of profile for the preferences page.
 class UserPreferencesProfile extends AbstractUserPreferences {
   UserPreferencesProfile({
+    required this.productPreferences,
     required final Function(Function()) setState,
     required final BuildContext context,
     required final UserPreferences userPreferences,
@@ -27,6 +29,7 @@ class UserPreferencesProfile extends AbstractUserPreferences {
           appLocalizations: appLocalizations,
           themeData: themeData,
         );
+        final ProductPreferences productPreferences;
 
   @override
   bool isCollapsedByDefault() => true;
@@ -123,7 +126,7 @@ return Center(
               await Navigator.push<dynamic>(
                 context,
                 MaterialPageRoute<dynamic>(
-                  builder: (BuildContext context) => const LoginPage(),
+                  builder: (BuildContext context) =>  LoginPage(userPreferences: userPreferences,productPreferences:productPreferences),
                 ),
               );
               setState(() {});
@@ -152,20 +155,6 @@ return Center(
           return const CircularProgressIndicator();}
         }));
         
-      
-  
-
-    result.addAll(
-      <Widget>[
-        ListTile(
-          leading: const Icon(Icons.public),
-          title: CountrySelector(
-            initialCountryCode: userPreferences.userCountryCode,
-          ),
-        ),
-      ],
-    );
-
     return result;
   }
 
@@ -186,6 +175,7 @@ return Center(
               text: localizations.yes,
               onPressed: () async {
                 UserManagementHelper.logout();
+                await context.read<ProductPreferences>().resetImportances();
                 Navigator.pop(context);
                 setState(() {});
               },
