@@ -71,7 +71,7 @@ class _ProfilPageState extends State<ProfilPage> {
       children.add(_getServingField_age(Data['age'].toString(),age_controller));
       children.add(_getServingField_length(Data['length'].toString(),length_controller));
       children.add(_getServingField_weight(Data['weight'].toString(),weight_controller));
-      children.add(_getServingField_f_r(Data['food_restraction'].toString(), f_r_controller));
+      children.add(_getServingField_f_r(Data['food_restriction'].toString(), f_r_controller));
       children.add(_getServingField_allergy(Data['allergy'].toString(),allergy_controller));
       children.add(_getServingField_another_allergy(Data['another_allergy'].toString(),another_alergy_controller));
       children.add(_getServingField_email(Data['email'].toString(),email_controller));
@@ -246,7 +246,7 @@ class _ProfilPageState extends State<ProfilPage> {
               // ignore: prefer_const_constructors
               decoration: InputDecoration(
           border: const UnderlineInputBorder(),
-          labelText: 'Food Restraction',
+          labelText: 'Food Restriction',
         ),
               autofillHints: const <String>[AutofillHints.name],
               validator: (String? value) {
@@ -382,7 +382,7 @@ class _ProfilPageState extends State<ProfilPage> {
  
    Future<void> _save(BuildContext context, Map<String,dynamic>? Data) async {
 
-if((name_controller.text !=Data!['name'].toString())||(lastname_controller.text !=Data['last_name'].toString())||(age_controller.text !=Data['age'].toString())||(length_controller.text !=Data['length'].toString())||(weight_controller.text !=Data['weight'].toString())||(f_r_controller.text !=Data['food_restraction'].toString())||(allergy_controller.text !=Data['allergy'].toString())||(another_alergy_controller.text !=Data['another_allergy'].toString())||(email_controller.text !=Data['email'].toString())||(password_controller.text !=Data['password'].toString())){
+if((name_controller.text !=Data!['name'].toString())||(lastname_controller.text !=Data['last_name'].toString())||(age_controller.text !=Data['age'].toString())||(length_controller.text !=Data['length'].toString())||(weight_controller.text !=Data['weight'].toString())||(f_r_controller.text !=Data['food_restriction'].toString())||(allergy_controller.text !=Data['allergy'].toString())||(another_alergy_controller.text !=Data['another_allergy'].toString())||(email_controller.text !=Data['email'].toString())||(password_controller.text !=Data['password'].toString())){
      showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -397,7 +397,6 @@ if((name_controller.text !=Data!['name'].toString())||(lastname_controller.text 
             SmoothActionButton(
               text: 'Yes',
               onPressed: () {
-
                 Navigator.pop(context);
                 setState(() {
                  List<String> attributes  =[Data['id'].toString(),name_controller.text,lastname_controller.text,age_controller.text,length_controller.text,
