@@ -1,7 +1,12 @@
+// ignore_for_file: unnecessary_null_comparison, non_constant_identifier_names, always_specify_types, avoid_void_async
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_offline/flutter_offline.dart';
+import 'package:openfoodfacts/model/Attribute.dart';
 import 'package:openfoodfacts/model/AttributeGroup.dart';
 import 'package:provider/provider.dart';
+import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
@@ -25,18 +30,21 @@ class UserPreferencesFood extends AbstractUserPreferences {
         );
 
   final ProductPreferences productPreferences;
+ late bool  _connectionStatus;
 
   static const List<String> _ORDERED_ATTRIBUTE_GROUP_IDS = <String>[
+     AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS,
     AttributeGroup.ATTRIBUTE_GROUP_NUTRITIONAL_QUALITY,
     AttributeGroup.ATTRIBUTE_GROUP_INGREDIENT_ANALYSIS,
     AttributeGroup.ATTRIBUTE_GROUP_ENVIRONMENT,
     AttributeGroup.ATTRIBUTE_GROUP_PROCESSING,
     AttributeGroup.ATTRIBUTE_GROUP_LABELS,
-    AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS,
+   
   ];
 
   @override
   bool isCollapsedByDefault() => false;
+
 
   @override
   String getPreferenceFlagKey() => 'attributes';
@@ -50,17 +58,43 @@ class UserPreferencesFood extends AbstractUserPreferences {
   @override
   Widget? getSubtitle() => Text(appLocalizations.myPreferences_food_subtitle);
 
+
+Widget _build(BuildContext context,List<AttributeGroup> groups) {
+  return  OfflineBuilder(
+              connectivityBuilder: (
+                  BuildContext context,
+                  ConnectivityResult connectivity,
+                  Widget child,
+                  ) {
+                _connectionStatus = connectivity != ConnectivityResult.none;
+                if(_connectionStatus){
+                    update_server(groups);
+                    // print(userPreferences.getImportance('allergens_no_gluten'));
+                }
+                return Stack() ;
+              },
+              builder: (BuildContext context) {
+                return const SizedBox();
+              }
+              );
+  
+}
+
+
   @override
   List<Widget> getBody() {
     final List<AttributeGroup> groups =
         _reorderGroups(productPreferences.attributeGroups!);
+        
     final List<Widget> result = <Widget>[
-      ListTile(
-        leading: const Icon(Icons.rotate_left),
-        title: Text(appLocalizations.reset_food_prefs),
-        onTap: () => _confirmReset(context),
-      ),
+      // ListTile(
+      //   leading: const Icon(Icons.rotate_left),
+      //   title: Text(appLocalizations.reset_food_prefs),
+      //   onTap: () => _confirmReset(context),
+      // ),
     ];
+     
+    result.add(_build(context,groups));
     for (final AttributeGroup group in groups) {
       final AbstractUserPreferences abstractUserPreferences =
           UserPreferencesAttributeGroup(
@@ -75,6 +109,7 @@ class UserPreferencesFood extends AbstractUserPreferences {
 
       result.addAll(abstractUserPreferences.getContent());
     }
+   
     return result;
   }
 
@@ -88,30 +123,43 @@ class UserPreferencesFood extends AbstractUserPreferences {
     return result;
   }
 
-  void _confirmReset(BuildContext context) {
-    final AppLocalizations localizations = AppLocalizations.of(context)!;
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(localizations.confirmResetPreferences),
-          actions: <Widget>[
-            TextButton(
-              child: Text(localizations.yes),
-              onPressed: () async {
-                await context.read<ProductPreferences>().resetImportances();
-                Navigator.pop(context);
-              },
-            ),
-            TextButton(
-              child: Text(localizations.no),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
-        );
-      },
-    );
+  // void _confirmReset(BuildContext context) {
+  //   final AppLocalizations localizations = AppLocalizations.of(context)!;
+  //   showDialog<void>(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text(localizations.confirmResetPreferences),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             child: Text(localizations.yes),
+  //             onPressed: () async {
+  //               await context.read<ProductPreferences>().resetImportances();
+  //               Navigator.pop(context);
+  //             },
+  //           ),
+  //           TextButton(
+  //             child: Text(localizations.no),
+  //             onPressed: () {
+  //               Navigator.pop(context);
+  //             },
+  //           )
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  void update_server(List<AttributeGroup> groups) async{
+    final AttributeGroup group = (groups.where((AttributeGroup g) => g.id == 'allergens')).first;
+              if(DataBaseConfiguration.user != null){
+                final Map<String,dynamic> Data = await DataBaseConfiguration.getData();
+                 final  Map<String,String> att_map={'user_id': Data['id'].toString()} ;
+                  Attribute attributt;
+                  for(attributt in group.attributes!){
+                    att_map[attributt.id!] = userPreferences.getImportance(attributt.id!);
+                    att_map['who_${attributt.id}'] = userPreferences.getWHO('who_${attributt.id}');
+                  }
+                  DataBaseConfiguration.updateDataAllergy(att_map); }
   }
 }
