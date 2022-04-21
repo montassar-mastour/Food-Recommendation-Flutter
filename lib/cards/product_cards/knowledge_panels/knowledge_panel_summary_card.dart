@@ -19,7 +19,7 @@ class KnowledgePanelSummaryCard extends StatelessWidget {
       case TitleElementType.GRADE:
         return ScoreCard(
           iconUrl: knowledgePanel.titleElement!.iconUrl,
-          description: knowledgePanel.titleElement!.title,
+          description: 'NUTRI-SCORE',
           cardEvaluation: getCardEvaluationFromKnowledgePanelTitleElement(
             knowledgePanel.titleElement!,
           ),

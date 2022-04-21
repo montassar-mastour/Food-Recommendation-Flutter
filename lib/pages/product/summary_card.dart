@@ -229,8 +229,7 @@ class _SummaryCardState extends State<SummaryCard> {
         for (final Attribute attribute in scoreAttributes)
           ScoreCard(
             iconUrl: attribute.iconUrl,
-            description:
-                attribute.descriptionShort ?? attribute.description ?? '',
+            description: 'NUTRI-SCORE',
             cardEvaluation: getCardEvaluationFromAttribute(attribute),
           ),
         _buildProductQuestionsWidget(),
