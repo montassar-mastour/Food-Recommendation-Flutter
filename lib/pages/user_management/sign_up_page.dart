@@ -66,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayNameController,
               textInputAction: TextInputAction.next,
               hintText: 'First Name',
-              // prefixIcon: const Icon(Icons.person),
+              prefixIcon: const Icon(Icons.person),
               autofillHints: const <String>[AutofillHints.name],
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -82,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayLastNameController,
               textInputAction: TextInputAction.next,
               hintText: 'Last Name',
-              // prefixIcon: const Icon(Icons.person),
+              prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display Last name you want to use';
@@ -96,6 +96,8 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayAgeController,
               textInputAction: TextInputAction.next,
               hintText: 'Age',
+              textInputType :TextInputType.number,
+              prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display Age you want to use';
@@ -109,6 +111,8 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayLengthController,
               textInputAction: TextInputAction.next,
               hintText: 'Length',
+              textInputType :TextInputType.number,
+              prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display Length you want to use';
@@ -122,6 +126,8 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayWeightController,
               textInputAction: TextInputAction.next,
               hintText: 'Weight',
+              textInputType :TextInputType.number,
+              prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display Weight you want to use';
@@ -135,6 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayFRController,
               textInputAction: TextInputAction.next,
               hintText: 'food restriction',
+              prefixIcon: const Icon(Icons.food_bank),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display food restraction you want to use';
@@ -148,6 +155,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayAllergyController,
               textInputAction: TextInputAction.next,
               hintText: 'Allergy',
+              prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display Allergy you want to use';
@@ -161,6 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _displayAnotherAllergyController,
               textInputAction: TextInputAction.next,
               hintText: 'Another Allergy',
+              prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter the display Another Allergy you want to use';
@@ -175,7 +184,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _emailController,
               textInputAction: TextInputAction.next,
               hintText: appLocalizations.sign_up_page_email_hint,
-              // prefixIcon: const Icon(Icons.person),
+              prefixIcon: const Icon(Icons.email),
               autofillHints: const <String>[AutofillHints.email],
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -194,7 +203,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _password1Controller,
               textInputAction: TextInputAction.next,
               hintText: appLocalizations.sign_up_page_password_hint,
-              // prefixIcon: const Icon(Icons.vpn_key),
+              prefixIcon: const Icon(Icons.vpn_key),
               autofillHints: const <String>[AutofillHints.password],
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -212,7 +221,7 @@ class _SignUpPageState extends State<SignUpPage> {
               controller: _password2Controller,
               textInputAction: TextInputAction.next,
               hintText: appLocalizations.sign_up_page_confirm_password_hint,
-              // prefixIcon: const Icon(Icons.vpn_key),
+              prefixIcon: const Icon(Icons.vpn_key),
               autofillHints: const <String>[
                 AutofillHints.password,
               ],

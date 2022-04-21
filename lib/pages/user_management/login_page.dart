@@ -136,10 +136,10 @@ class _LoginPageState extends State<LoginPage> {
                   SmoothTextFormField(
                     type: TextFieldTypes.PLAIN_TEXT,
                     controller: userIdController,
-                    hintText: appLocalizations.login,
+                    hintText: 'email',
                     textColor: _customGrey,
                     backgroundColor: _textFieldBackgroundColor,
-                    prefixIcon: const Icon(Icons.person),
+                    prefixIcon: const Icon(Icons.email),
                     enabled: !_runningQuery,
                     // Moves focus to the next field
                     textInputAction: TextInputAction.next,
