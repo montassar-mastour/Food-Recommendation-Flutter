@@ -33,6 +33,20 @@ abstract class AbstractUserPreferences {
   @protected
   Widget getTitle();
 
+
+   Widget getLogo(){
+     final String attribute = getPreferenceFlagKey();
+      if(attribute=='attribute:allergens'){
+        return   SizedBox(
+          width: 150,
+          height: 50,
+          child:Image.asset('assets/app/logo1-hassassia.png') , 
+        );
+        }else{
+          return EMPTY_WIDGET;
+        }
+         
+   }
   /// Subtitle of the header, always visible.
   @protected
   Widget? getSubtitle();
@@ -62,9 +76,11 @@ abstract class AbstractUserPreferences {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         getTitle(),
+        getLogo(),
         Icon(
           _isCollapsed(userPreferences) ? Icons.expand_more : Icons.expand_less,
         ),
+         
       ],
     );
     final Widget? subtitle = getSubtitle();
