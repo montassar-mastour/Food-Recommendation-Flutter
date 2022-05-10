@@ -1,3 +1,5 @@
+// ignore_for_file: always_specify_types, unnecessary_nullable_for_final_variable_declarations, avoid_field_initializers_in_const_classes, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:openfoodfacts/model/Attribute.dart';
@@ -65,7 +67,34 @@ class _SummaryCardState extends State<SummaryCard> {
   // Number of Rows that will be printed in the SummaryCard, initialized to a
   // very high number for infinite rows.
   int totalPrintableRows = 10000;
-
+  String? descript;
+  final List<Attribute> liste = <Attribute>[];
+  List<Attribute> get_grp(String? desc){
+      final List<Attribute> grp = <Attribute>[];
+      final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_cacahuete','allergens_no_Poissons','allergens_no_Fruits de mer'];
+      if(desc != null){
+        for(final String attributeId in attributees ){
+           final String attributeName = attributeId.substring(13);
+           final String importanceId = widget._productPreferences.getImportanceIdForAttributeId(attributeId);
+          if(PreferenceImportance.ID_MANDATORY == importanceId || PreferenceImportance.ID_IMPORTANT == importanceId ){
+            final Attribute attributee = Attribute(id: attributeId,name: attributeName);
+                   if(desc.contains(attributeName))
+            {
+              attributee.title ='contient : ${attributee.name}';
+              attributee.status='known';
+              attributee.match=0.0;
+              grp.add(attributee);
+            }else{
+            attributee.title = 'Ne contient pas : ${attributee.name}';
+             attributee.status='known';
+             attributee.match=100.0;
+             grp.add(attributee);
+            }
+        }
+        }
+      }
+    return grp;
+  }
   // For some reason, special case for "label" attributes
   final Set<String> _attributesToExcludeIfStatusIsUnknown = <String>{};
   Future<List<RobotoffQuestion>>? _productQuestions;
@@ -89,12 +118,35 @@ class _SummaryCardState extends State<SummaryCard> {
         builder: (BuildContext context, BoxConstraints constraints) {
       if (widget.isFullVersion) {
         return buildProductSmoothCard(
-          header: _buildProductCompatibilityHeader(context),
-          body: Padding(
-            padding: SMOOTH_CARD_PADDING,
-            child: _buildSummaryCardContent(context),
-          ),
+          header: FutureBuilder<String?>(
+            future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( widget._product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
+              builder:(context,snapshot){
+                        if(snapshot.hasData) 
+                        {
+                       final liste = get_grp(snapshot.data);
+                        return  _buildProductCompatibilityHeader(context,liste);
+                        }else{
+                        return const CircularProgressIndicator();
+                        }
+               }
+           ),
           margin: EdgeInsets.zero,
+          body:  FutureBuilder<String?>(
+            future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( widget._product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
+              builder:(context,snapshot){
+                        if(snapshot.hasData) 
+                        {
+                          descript = snapshot.data;
+                              
+                           return  Padding(
+                             padding: SMOOTH_CARD_PADDING,
+                              child: _buildSummaryCardContent(context),
+                              );
+                        }else{
+      return const CircularProgressIndicator();
+              }
+              }
+            )
         );
       } else {
         return _buildLimitedSizeSummaryCard(constraints.maxHeight);
@@ -114,12 +166,34 @@ class _SummaryCardState extends State<SummaryCard> {
             minHeight: parentHeight,
             maxHeight: double.infinity,
             child: buildProductSmoothCard(
-              header: _buildProductCompatibilityHeader(context),
-              body: Padding(
-                padding: SMOOTH_CARD_PADDING,
-                child: _buildSummaryCardContent(context),
-              ),
+              header: FutureBuilder<String?>(
+            future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( widget._product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
+              builder:(context,snapshot){
+                        if(snapshot.hasData) 
+                        {
+                       final liste = get_grp(snapshot.data);
+                        return  _buildProductCompatibilityHeader(context,liste);
+                        }else{
+                        return const CircularProgressIndicator();
+                        }
+               }
+           ),
               margin: EdgeInsets.zero,
+              body: FutureBuilder<String?>(
+            future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( widget._product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
+              builder:(context,snapshot){
+                        if(snapshot.hasData) 
+                        {
+                          descript = snapshot.data;
+                             return  Padding(
+                             padding: SMOOTH_CARD_PADDING,
+                              child: _buildSummaryCardContent(context),
+                              );
+                        }else{
+      return const CircularProgressIndicator();
+              }
+              }
+            )
             ),
           ),
         ),
@@ -259,9 +333,9 @@ class _SummaryCardState extends State<SummaryCard> {
     );
   }
 
-  Widget _buildProductCompatibilityHeader(BuildContext context) {
+  Widget _buildProductCompatibilityHeader(BuildContext context,List<Attribute> grp) {
     final MatchedProduct matchedProduct =
-        MatchedProduct(widget._product, widget._productPreferences);
+        MatchedProduct(widget._product, widget._productPreferences,grp);
     final ProductCompatibilityHelper helper =
         ProductCompatibilityHelper(matchedProduct);
     return Container(
@@ -418,6 +492,30 @@ class _SummaryCardState extends State<SummaryCard> {
         result.add(attribute);
       }
     }
+        if(attributeGroup.id == AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS){
+      final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_cacahuete','allergens_no_Poissons','allergens_no_Fruits de mer'];
+      if(descript != null){
+        for(final String attributeId in attributees ){
+           final String attributeName = attributeId.substring(13);
+           final String importanceId = widget._productPreferences.getImportanceIdForAttributeId(attributeId);
+          if(importance == importanceId){
+            final Attribute attributee = Attribute(id: attributeId,name: attributeName);
+                   if(descript!.contains(attributeName))
+            {
+              attributee.title ='contient : ${attributee.name}';
+              attributee.status='known';
+              attributee.match=0.0;
+              result.add(attributee);
+            }else{
+            attributee.title = 'Ne contient pas : ${attributee.name}';
+             attributee.status='known';
+             attributee.match=100.0;
+              result.add(attributee);
+            }
+        }
+        }
+      }
+    } 
     return result;
   }
 

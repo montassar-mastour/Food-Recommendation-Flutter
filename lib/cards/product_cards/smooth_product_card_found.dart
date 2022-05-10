@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:openfoodfacts/model/Attribute.dart';
 import 'package:openfoodfacts/model/Product.dart';
+import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:openfoodfacts/personalized_search/matched_product.dart';
+import 'package:openfoodfacts/personalized_search/preference_importance.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_app/cards/data_cards/svg_icon_chip.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
+import 'package:smooth_app/database/product_query.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_product_image.dart';
 import 'package:smooth_app/helpers/product_cards_helper.dart';
 import 'package:smooth_app/helpers/product_compatibility_helper.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
 import 'package:smooth_app/pages/product/new_product_page.dart';
+import 'package:smooth_app/pages/product/summary_card.dart';
 
 class SmoothProductCardFound extends StatelessWidget {
   const SmoothProductCardFound({
@@ -47,12 +51,6 @@ class SmoothProductCardFound extends StatelessWidget {
     for (final Attribute attribute in attributes) {
       scores.add(SvgIconChip(attribute.iconUrl!, height: iconSize));
     }
-    final MatchedProduct matchedProduct = MatchedProduct(
-      product,
-      context.watch<ProductPreferences>(),
-    );
-    final ProductCompatibilityHelper helper =
-        ProductCompatibilityHelper(matchedProduct);
     return GestureDetector(
       onTap: onTap ??
           () async {
@@ -105,7 +103,19 @@ class SmoothProductCardFound extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
-                        Row(
+                      FutureBuilder<String?>(
+                        future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
+                        builder:(context, snapshot){
+                          if (snapshot.hasData){ 
+                            final List<Attribute> grp = get_grp(snapshot.data,context);
+                            final MatchedProduct matchedProduct = MatchedProduct(
+                             product,
+                               context.watch<ProductPreferences>(),
+                              grp
+                             );
+                            final ProductCompatibilityHelper helper =
+                             ProductCompatibilityHelper(matchedProduct);
+                            return Row(
                           children: <Widget>[
                             Icon(
                               Icons.circle,
@@ -120,7 +130,12 @@ class SmoothProductCardFound extends StatelessWidget {
                               style: Theme.of(context).textTheme.bodyText2,
                             ),
                           ],
-                        ),
+                        );
+                        } else {
+                        return const CircularProgressIndicator();
+                        }
+                        }
+                        )
                       ],
                     ),
                   ),
@@ -137,3 +152,34 @@ class SmoothProductCardFound extends StatelessWidget {
     );
   }
 }
+
+
+    List<Attribute> get_grp(String? desc,BuildContext context){
+        final ProductPreferences productPreferences =
+        context.watch<ProductPreferences>();
+      final List<Attribute> grp = <Attribute>[];
+      final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_cacahuete','allergens_no_Poissons','allergens_no_Fruits de mer'];
+      if(desc != null){
+        for(final String attributeId in attributees ){
+           final String attributeName = attributeId.substring(13);
+
+           final String importanceId = productPreferences.getImportanceIdForAttributeId(attributeId);
+          if(PreferenceImportance.ID_MANDATORY == importanceId || PreferenceImportance.ID_IMPORTANT == importanceId ){
+            final Attribute attributee = Attribute(id: attributeId,name: attributeName);
+                   if(desc.contains(attributeName))
+            {
+              attributee.title ='contient : ${attributee.name}';
+              attributee.status='known';
+              attributee.match=0.0;
+              grp.add(attributee);
+            }else{
+            attributee.title = 'Ne contient pas : ${attributee.name}';
+             attributee.status='known';
+             attributee.match=100.0;
+             grp.add(attributee);
+            }
+        }
+        }
+      }
+    return grp;
+  }
