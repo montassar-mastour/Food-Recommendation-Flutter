@@ -41,7 +41,7 @@ class UserPreferencesAttributeGroup extends AbstractUserPreferences {
 
   @override
   Widget getTitle() {
-       if(group.name == 'Allergens' )
+       if(group.id == 'allergens')
     return Text('Hassassia' , style: themeData.textTheme.headline6) ;
        else if(group.name != null)
     return Text( group.name! , style: themeData.textTheme.headline6);
