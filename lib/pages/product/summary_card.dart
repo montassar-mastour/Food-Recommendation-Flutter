@@ -22,6 +22,7 @@ import 'package:smooth_app/helpers/product_cards_helper.dart';
 import 'package:smooth_app/helpers/product_compatibility_helper.dart';
 import 'package:smooth_app/helpers/score_card_helper.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
+import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/product/common/product_query_page_helper.dart';
 
 const List<String> _ATTRIBUTE_GROUP_ORDER = <String>[
@@ -69,16 +70,29 @@ class _SummaryCardState extends State<SummaryCard> {
   int totalPrintableRows = 10000;
   String? descript;
   final List<Attribute> liste = <Attribute>[];
-  List<Attribute> get_grp(String? desc){
+  List<Attribute> get_grp(String? desc,BuildContext context){
+       Language.build(context);
       final List<Attribute> grp = <Attribute>[];
       final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_cacahuete','allergens_no_Poissons','allergens_no_Fruits de mer'];
       if(desc != null){
+        String? attributeName;
         for(final String attributeId in attributees ){
-           final String attributeName = attributeId.substring(13);
+                    switch (attributeId){ 
+      case 'allergens_no_Kiwi' : attributeName = Language.kiwi;break;
+      case 'allergens_no_Pêche' : attributeName = Language.peach ;break;
+      case 'allergens_no_Pomme' : attributeName = Language.apple ;break;
+      case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
+      case 'allergens_no_Amande' : attributeName = Language.almond ;break;
+      case 'allergens_no_Noix' : attributeName = Language.nut ;break;
+      case 'allergens_no_Noisette' : attributeName = Language.hazelnut ;break;
+      case 'allergens_no_Cacahuete' : attributeName = Language.peanut ;break;
+      case 'allergens_no_Poissons' : attributeName = Language.fishes ;break;
+      case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
+        }
            final String importanceId = widget._productPreferences.getImportanceIdForAttributeId(attributeId);
           if(PreferenceImportance.ID_MANDATORY == importanceId || PreferenceImportance.ID_IMPORTANT == importanceId ){
             final Attribute attributee = Attribute(id: attributeId,name: attributeName);
-                   if(desc.contains(attributeName))
+                   if(desc.contains(attributeName!)|| descript!.contains(attributeName.toLowerCase()))
             {
               attributee.title ='contient : ${attributee.name}';
               attributee.status='known';
@@ -123,7 +137,7 @@ class _SummaryCardState extends State<SummaryCard> {
               builder:(context,snapshot){
                         if(snapshot.hasData) 
                         {
-                       final liste = get_grp(snapshot.data);
+                       final liste = get_grp(snapshot.data,context);
                         return  _buildProductCompatibilityHeader(context,liste);
                         }else{
                         return const CircularProgressIndicator();
@@ -171,7 +185,7 @@ class _SummaryCardState extends State<SummaryCard> {
               builder:(context,snapshot){
                         if(snapshot.hasData) 
                         {
-                       final liste = get_grp(snapshot.data);
+                       final liste = get_grp(snapshot.data,context);
                         return  _buildProductCompatibilityHeader(context,liste);
                         }else{
                         return const CircularProgressIndicator();
@@ -492,15 +506,30 @@ class _SummaryCardState extends State<SummaryCard> {
         result.add(attribute);
       }
     }
+    Language.build(context);
         if(attributeGroup.id == AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS){
       final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_cacahuete','allergens_no_Poissons','allergens_no_Fruits de mer'];
       if(descript != null){
+         String? attributeName ;
         for(final String attributeId in attributees ){
-           final String attributeName = attributeId.substring(13);
+             switch (attributeId){ 
+      case 'allergens_no_Kiwi' : attributeName = Language.kiwi;break;
+      case 'allergens_no_Pêche' : attributeName = Language.peach ;break;
+      case 'allergens_no_Pomme' : attributeName = Language.apple ;break;
+      case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
+      case 'allergens_no_Amande' : attributeName = Language.almond ;break;
+      case 'allergens_no_Noix' : attributeName = Language.nut ;break;
+      case 'allergens_no_Noisette' : attributeName = Language.hazelnut ;break;
+      case 'allergens_no_Cacahuete' : attributeName = Language.peanut ;break;
+      case 'allergens_no_Poissons' : attributeName = Language.fishes ;break;
+      case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
+        }
+           
+
            final String importanceId = widget._productPreferences.getImportanceIdForAttributeId(attributeId);
           if(importance == importanceId){
             final Attribute attributee = Attribute(id: attributeId,name: attributeName);
-                   if(descript!.contains(attributeName))
+                   if(descript!.contains(attributeName!)|| descript!.contains(attributeName.toLowerCase()))
             {
               attributee.title ='contient : ${attributee.name}';
               attributee.status='known';

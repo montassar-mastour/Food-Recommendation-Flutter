@@ -1,8 +1,7 @@
-// ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings, non_constant_identifier_names, avoid_void_async
+// ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings, avoid_void_async
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:geocoding/geocoding.dart' as pre ;
 import 'package:location/location.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
@@ -11,6 +10,7 @@ import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_text_form_field.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
+import 'package:smooth_app/language/language.dart';
 
 /// Sign Up Page. Pop's true if the sign up was successful.
 class SignUpPage extends StatefulWidget {
@@ -42,6 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final ThemeData theme = Theme.of(context);
     final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     final Size size = MediaQuery.of(context).size;
+        Language.build(context);
 
     // TODO(monsieurtanuki): translations
     return Scaffold(
@@ -65,7 +66,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayNameController,
               textInputAction: TextInputAction.next,
-              hintText: 'First Name',
+              hintText: Language.first_name!,
               prefixIcon: const Icon(Icons.person),
               autofillHints: const <String>[AutofillHints.name],
               validator: (String? value) {
@@ -81,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayLastNameController,
               textInputAction: TextInputAction.next,
-              hintText: 'Last Name',
+              hintText: Language.last_name!,
               prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -95,7 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayAgeController,
               textInputAction: TextInputAction.next,
-              hintText: 'Age',
+              hintText: Language.age!,
               textInputType :TextInputType.number,
               prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
@@ -110,7 +111,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayLengthController,
               textInputAction: TextInputAction.next,
-              hintText: 'Length',
+              hintText: Language.length!,
               textInputType :TextInputType.number,
               prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
@@ -125,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayWeightController,
               textInputAction: TextInputAction.next,
-              hintText: 'Weight',
+              hintText: Language.weight!,
               textInputType :TextInputType.number,
               prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
@@ -140,7 +141,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayFRController,
               textInputAction: TextInputAction.next,
-              hintText: 'food restriction',
+              hintText: Language.food_restriction!,
               prefixIcon: const Icon(Icons.food_bank),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -154,7 +155,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayAllergyController,
               textInputAction: TextInputAction.next,
-              hintText: 'Allergy',
+              hintText: Language.allergy!,
               prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {
@@ -168,7 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayAnotherAllergyController,
               textInputAction: TextInputAction.next,
-              hintText: 'Another Allergy',
+              hintText: Language.another_allergy!,
               prefixIcon: const Icon(Icons.person),
               validator: (String? value) {
                 if (value == null || value.isEmpty) {

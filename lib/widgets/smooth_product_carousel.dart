@@ -9,6 +9,7 @@ import 'package:smooth_app/cards/product_cards/smooth_product_card_not_found.dar
 import 'package:smooth_app/cards/product_cards/smooth_product_card_thanks.dart';
 import 'package:smooth_app/data_models/continuous_scan_model.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_card.dart';
+import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/scan/scan_product_card.dart';
 import 'package:smooth_app/pages/scan/search_page.dart';
 
@@ -108,6 +109,7 @@ class SearchCard extends StatelessWidget {
   final double height;
   @override
   Widget build(BuildContext context) {
+    Language.build(context);
     final AppLocalizations localizations = AppLocalizations.of(context)!;
     return SmoothCard(
       color: Theme.of(context).colorScheme.background.withOpacity(0.85),
@@ -122,7 +124,7 @@ class SearchCard extends StatelessWidget {
           children: <Widget>[
             // ignore: prefer_const_constructors
             Text(
-              'welcome',
+              Language.welcome!,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 36.0,

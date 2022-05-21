@@ -13,6 +13,7 @@ import 'package:smooth_app/generic_lib/widgets/smooth_product_image.dart';
 import 'package:smooth_app/helpers/product_cards_helper.dart';
 import 'package:smooth_app/helpers/product_compatibility_helper.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
+import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/product/new_product_page.dart';
 import 'package:smooth_app/pages/product/summary_card.dart';
 
@@ -158,15 +159,28 @@ class SmoothProductCardFound extends StatelessWidget {
         final ProductPreferences productPreferences =
         context.watch<ProductPreferences>();
       final List<Attribute> grp = <Attribute>[];
+      Language.build(context);
       final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_cacahuete','allergens_no_Poissons','allergens_no_Fruits de mer'];
       if(desc != null){
+        String? attributeName;
         for(final String attributeId in attributees ){
-           final String attributeName = attributeId.substring(13);
+                   switch (attributeId){ 
+      case 'allergens_no_Kiwi' : attributeName = Language.kiwi;break;
+      case 'allergens_no_Pêche' : attributeName = Language.peach ;break;
+      case 'allergens_no_Pomme' : attributeName = Language.apple ;break;
+      case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
+      case 'allergens_no_Amande' : attributeName = Language.almond ;break;
+      case 'allergens_no_Noix' : attributeName = Language.nut ;break;
+      case 'allergens_no_Noisette' : attributeName = Language.hazelnut ;break;
+      case 'allergens_no_Cacahuete' : attributeName = Language.peanut ;break;
+      case 'allergens_no_Poissons' : attributeName = Language.fishes ;break;
+      case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
+        }
 
            final String importanceId = productPreferences.getImportanceIdForAttributeId(attributeId);
           if(PreferenceImportance.ID_MANDATORY == importanceId || PreferenceImportance.ID_IMPORTANT == importanceId ){
             final Attribute attributee = Attribute(id: attributeId,name: attributeName);
-                   if(desc.contains(attributeName))
+                   if(desc.contains(attributeName!) || desc.contains(attributeName.toLowerCase()))
             {
               attributee.title ='contient : ${attributee.name}';
               attributee.status='known';

@@ -7,6 +7,7 @@ import 'package:openfoodfacts/model/AttributeGroup.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
+import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
 import 'package:smooth_app/themes/smooth_theme.dart';
 import 'package:smooth_app/widgets/attribute_button.dart';
@@ -79,6 +80,23 @@ class UserPreferencesAttributeGroup extends AbstractUserPreferences {
           ),
         ),
       );
+    }
+Language.build(context);
+    if(group.id==AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS){
+      for(final Attribute att in group.attributes!){
+        switch (att.name){ 
+      case 'Kiwi' : att.name = Language.kiwi;break;
+      case 'Pêche' : att.name = Language.peach ;break;
+      case 'Pomme' : att.name = Language.apple ;break;
+      case 'Fraise' : att.name = Language.strawberry ;break;
+      case 'Amande' : att.name = Language.almond ;break;
+      case 'Noix' : att.name = Language.nut ;break;
+      case 'Noisette' : att.name = Language.hazelnut ;break;
+      case 'Cacahuete' : att.name = Language.peanut ;break;
+      case 'Poissons' : att.name = Language.fishes ;break;
+      case 'Fruits de mer' : att.name = Language.shellfish ;
+        }
+      }
     }
     final List<Attribute> attributes = group.attributes!;
     result.addAll(

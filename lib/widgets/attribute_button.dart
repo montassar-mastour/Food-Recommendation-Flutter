@@ -7,6 +7,7 @@ import 'package:openfoodfacts/personalized_search/preference_importance.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
+import 'package:smooth_app/language/language.dart';
 
 /// Colored button for attribute importance, with corresponding action
 class AttributeButton extends StatelessWidget {
@@ -87,15 +88,16 @@ class AttributeButton extends StatelessWidget {
     );
   }
 void _confirm_who(BuildContext context,String importanceId) {
+  Language.build(context);
       final String how_id= 'who_${attribute.id!}';
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Who have this allergy?'),
+          title: Text(Language.who_have_this_allergy!),
           actions: <Widget>[
             TextButton(
-              child: Text('ME'),
+              child: Text(Language.me!),
               onPressed: () {
                final String get =  userPreferences.getWHO(how_id);
                 if(get != HowVal[0]) userPreferences.setWHO(how_id,HowVal[0]);
@@ -104,7 +106,7 @@ void _confirm_who(BuildContext context,String importanceId) {
               },
             ),
             TextButton(
-              child: Text('Member of my family'),
+              child: Text(Language.Member_of_my_family!),
               onPressed: () {
                 final String get =  userPreferences.getWHO(how_id);
                 if(get != HowVal[1]) userPreferences.setWHO(how_id,HowVal[1]);
@@ -112,7 +114,7 @@ void _confirm_who(BuildContext context,String importanceId) {
               },
             ),
             TextButton(
-              child: Text('Both'),
+              child: Text(Language.both!),
               onPressed: () {
                 final String get =  userPreferences.getWHO(how_id);
                 if(get != HowVal[2]) userPreferences.setWHO(how_id,HowVal[2]);
@@ -120,7 +122,7 @@ void _confirm_who(BuildContext context,String importanceId) {
               },
             ),
             TextButton(
-              child: Text('Close'),
+              child: Text(Language.close!),
               onPressed: () {
                 Navigator.pop(context);
               },
