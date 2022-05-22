@@ -160,7 +160,7 @@ class SmoothProductCardFound extends StatelessWidget {
         context.watch<ProductPreferences>();
       final List<Attribute> grp = <Attribute>[];
       Language.build(context);
-      final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_cacahuete','allergens_no_Poissons','allergens_no_Fruits de mer'];
+      final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_Fruits de mer'];
       if(desc != null){
         String? attributeName;
         for(final String attributeId in attributees ){
@@ -172,8 +172,6 @@ class SmoothProductCardFound extends StatelessWidget {
       case 'allergens_no_Amande' : attributeName = Language.almond ;break;
       case 'allergens_no_Noix' : attributeName = Language.nut ;break;
       case 'allergens_no_Noisette' : attributeName = Language.hazelnut ;break;
-      case 'allergens_no_Cacahuete' : attributeName = Language.peanut ;break;
-      case 'allergens_no_Poissons' : attributeName = Language.fishes ;break;
       case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
         }
 
