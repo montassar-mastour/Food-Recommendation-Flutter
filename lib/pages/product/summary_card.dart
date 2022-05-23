@@ -84,7 +84,7 @@ class _SummaryCardState extends State<SummaryCard> {
       case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
       case 'allergens_no_Amande' : attributeName = Language.almond ;break;
       case 'allergens_no_Noix' : attributeName = Language.nut ;break;
-      case 'allergens_no_Noisette' : attributeName = Language.hazelnut ;break;
+      case 'allergens_no_Noisettes' : attributeName = Language.hazelnut ;break;
       case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
         }
            final String importanceId = widget._productPreferences.getImportanceIdForAttributeId(attributeId);
@@ -135,28 +135,29 @@ class _SummaryCardState extends State<SummaryCard> {
               builder:(context,snapshot){
                         if(snapshot.hasData) 
                         {
-                          print('ok');
-                       final liste = get_grp(snapshot.data,context);
-                        return  _buildProductCompatibilityHeader(context,liste);
+                          return  _buildProductCompatibilityHeader(context,liste);
+                       
                         }else{
-                        return const CircularProgressIndicator();
-                        }
+                        final liste = get_grp(snapshot.data,context);
+                        
+                        }return const CircularProgressIndicator();
                }
            ),
           margin: EdgeInsets.zero,
           body:  FutureBuilder<String?>(
             future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( widget._product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
               builder:(context,snapshot){
-                        if(snapshot.hasData) 
+                        if(!snapshot.hasData) 
                         {
-                          descript = snapshot.data;
+                          return const CircularProgressIndicator();
+                        }else{
+      
+                              descript = snapshot.data;
                               
                            return  Padding(
                              padding: SMOOTH_CARD_PADDING,
                               child: _buildSummaryCardContent(context),
                               );
-                        }else{
-      return const CircularProgressIndicator();
               }
               }
             )
@@ -518,7 +519,7 @@ class _SummaryCardState extends State<SummaryCard> {
       case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
       case 'allergens_no_Amande' : attributeName = Language.almond ;break;
       case 'allergens_no_Noix' : attributeName = Language.nut ;break;
-      case 'allergens_no_Noisette' : attributeName = Language.hazelnut ;break;
+      case 'allergens_no_Noisettes' : attributeName = Language.hazelnut ;break;
       case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
         }
            

@@ -30,6 +30,10 @@ class Language {
    static String? fishes;
    static String? shellfish;
    static String? welcome;
+   static String? Other ;
+   static String? sea_food;
+   static String? nuts;
+   static String? fruit_and_vegetable;
  static Widget build(BuildContext context) {
   final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
   
@@ -57,6 +61,10 @@ hazelnut='Noisette';
 shellfish='Fruits de mer';
 me='Moi';
 welcome='Bienvenue';
+Other='Autres';
+sea_food='Fruit de mer';
+nuts='Fruit à coque';
+fruit_and_vegetable='Fruit et légume';
 }
 else if( appLocalizations.yes=='Yes'){
 email='email';
@@ -82,6 +90,10 @@ hazelnut='Hazelnut';
 shellfish='Shellfish';
 me='Me';
 welcome='Welcome';
+Other='Other';
+sea_food='Sea Food';
+nuts='Nuts';
+fruit_and_vegetable='Fruit and Vegetable';
 }
 else if( appLocalizations.yes=='نعم'){
 email='بريد الالكتروني';
@@ -106,6 +118,10 @@ hazelnut='بندق';
 shellfish='المحار';
 me='أنا';
 welcome='مرحبا';
+Other='آخر';
+sea_food='مأكولات بحرية';
+nuts='المكسرات';
+fruit_and_vegetable='فواكه و خضروات';
 }
 return EMPTY_WIDGET;
   }

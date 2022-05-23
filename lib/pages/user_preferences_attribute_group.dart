@@ -42,9 +42,7 @@ class UserPreferencesAttributeGroup extends AbstractUserPreferences {
 
   @override
   Widget getTitle() {
-       if(group.id == 'allergens')
-    return Text('Hassassia' , style: themeData.textTheme.headline6) ;
-       else if(group.name != null)
+        if(group.name != null)
     return Text( group.name! , style: themeData.textTheme.headline6);
         else  return Text(appLocalizations.unknown,style: themeData.textTheme.headline6);
      }
@@ -91,8 +89,8 @@ Language.build(context);
       case 'Fraise' : att.name = Language.strawberry ;break;
       case 'Amande' : att.name = Language.almond ;break;
       case 'Noix' : att.name = Language.nut ;break;
-      case 'Noisette' : att.name = Language.hazelnut ;break;
-      case 'Fruits de mer' : att.name = Language.shellfish ;
+      case 'Noisettes' : att.name = Language.hazelnut ;break;
+      case 'Fruits de mer' : att.name = Language.shellfish ;break;
         }
       }
     }

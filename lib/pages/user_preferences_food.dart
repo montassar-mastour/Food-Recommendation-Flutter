@@ -10,6 +10,7 @@ import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
+import 'package:smooth_app/pages/user_preferences_Allergy.dart';
 import 'package:smooth_app/pages/user_preferences_attribute_group.dart';
 
 /// Collapsed/expanded display of attribute groups for the preferences page.
@@ -96,8 +97,44 @@ Widget _build(BuildContext context,List<AttributeGroup> groups) {
      
     result.add(_build(context,groups));
     for (final AttributeGroup group in groups) {
-      final AbstractUserPreferences abstractUserPreferences =
-          UserPreferencesAttributeGroup(
+     late AbstractUserPreferences abstractUserPreferences;
+      if(group.id==AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS){ 
+       final AbstractUserPreferences abstractUserPreference = UserPreferencesAllergy(
+          productPreferences: productPreferences,
+        group: group,
+        setState: setState,
+        context: context,
+        userPreferences: userPreferences,
+        appLocalizations: appLocalizations,
+        themeData: themeData,
+      );
+       result.addAll(abstractUserPreference.getContent());
+      //  final List<Attribute> list_1 = [group.attributes!.where((e) => e.id=='allergens_no_gluten').single,group.attributes!.where((e) => e.id=='allergens_no_milk').single,group.attributes!.where((e) => e.id=='allergens_no_eggs').single,group.attributes!.where((e) => e.id=='allergens_no_sesame_seeds').single,group.attributes!.where((e) => e.id=='allergens_no_lupin').single,group.attributes!.where((e) => e.id=='allergens_no_soybeans').single,group.attributes!.where((e) => e.id=='allergens_no_mustard').single];
+      //  final List<Attribute> list_2 = [group.attributes!.where((e) => e.id=='allergens_no_crustaceans').single,group.attributes!.where((e) => e.id=='allergens_no_fish').single,group.attributes!.where((e) => e.id=='allergens_no_molluscs').single,group.attributes!.where((e) => e.id=='allergens_no_Fruits de mer').single];        
+      //  final List<Attribute> list_3 = [group.attributes!.where((e) => e.id=='allergens_no_nuts').single,group.attributes!.where((e) => e.id=='allergens_no_no_Amande').single,group.attributes!.where((e) => e.id=='allergens_no_Noix').single,group.attributes!.where((e) => e.id=='allergens_no_Noisettes').single,group.attributes!.where((e) => e.id=='allergens_no_peanuts').single];        
+      //  final List<Attribute> list_4 = [group.attributes!.where((e) => e.id=='allergens_no_Kiwi').single,group.attributes!.where((e) => e.id=='allergens_no_Pêche').single,group.attributes!.where((e) => e.id=='allergens_no_Pomme').single,group.attributes!.where((e) => e.id=='allergens_no_Fraise').single,group.attributes!.where((e) => e.id=='allergens_no_celery').single];        
+      //  final AttributeGroup grp1 = AttributeGroup(id: 'allergens_Diversed',name: 'Diversed',attributes: list_1);
+      //  final AttributeGroup grp2 = AttributeGroup(id: 'allergens_Sea Food',name: 'Sea Food',attributes: list_2);
+      //  final AttributeGroup grp3 = AttributeGroup(id: 'allergens_fruit a coque',name:  'fruit a coque',attributes: list_3);
+      //  final AttributeGroup grp4 = AttributeGroup(id: 'allergens_fruit et legime',name: 'fruit et legime',attributes: list_4);
+      //  final List<AttributeGroup> grp_list =[grp1,grp2,grp3,grp4];
+    
+      //   for(final AttributeGroup grp in grp_list){ 
+      //   abstractUserPreferences   =   
+      //   UserPreferencesAttributeGroup(
+      //   productPreferences: productPreferences,
+      //   group: grp,
+      //   setState: setState,
+      //   context: context,
+      //   userPreferences: userPreferences,
+      //   appLocalizations: appLocalizations,
+      //   themeData: themeData,
+      // );
+      //  result.addAll(abstractUserPreferences.getContent());
+      //    }
+         }else{      
+        abstractUserPreferences   =
+        UserPreferencesAttributeGroup(
         productPreferences: productPreferences,
         group: group,
         setState: setState,
@@ -106,8 +143,9 @@ Widget _build(BuildContext context,List<AttributeGroup> groups) {
         appLocalizations: appLocalizations,
         themeData: themeData,
       );
+       result.addAll(abstractUserPreferences.getContent());}
 
-      result.addAll(abstractUserPreferences.getContent());
+     
     }
    
     return result;
