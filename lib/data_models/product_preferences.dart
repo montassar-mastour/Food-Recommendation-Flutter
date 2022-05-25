@@ -1,4 +1,5 @@
 import 'dart:async' show Future;
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:openfoodfacts/model/Attribute.dart';
@@ -221,5 +222,15 @@ class ProductPreferences extends ProductPreferencesManager with ChangeNotifier {
       }
     }
     throw Exception('unknown attribute group for $attributeId');
+  }
+    bool containsAttributeGroupAllergy(final String attributeId) {
+   final AttributeGroup allergy =  attributeGroups!.where((e) => e.id== AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS).single ;
+      for (final Attribute item in allergy.attributes!) {
+        if (item.id == attributeId) {
+          return true; 
+        }
+      }
+    
+    return false;
   }
 }

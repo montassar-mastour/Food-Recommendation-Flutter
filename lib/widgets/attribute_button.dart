@@ -52,11 +52,12 @@ class AttributeButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           SizedBox(
-            width: screenWidth * .45,
+            width: screenWidth * .30,
             child: Text(attribute.name!, style: style),
           ),
+          getLogo(screenWidth,attribute,productPreferences),
           SizedBox(
-            width: screenWidth * .45,
+            width: screenWidth * .35,
             child: ElevatedButton(
               child: Text(
                 productPreferences
@@ -135,3 +136,18 @@ void _confirm_who(BuildContext context,String importanceId) {
   }
 
 }
+
+   Widget getLogo(double screenWidth,Attribute attribute,ProductPreferences productPreferences){
+     if(attribute.id!.isNotEmpty && productPreferences.containsAttributeGroupAllergy(attribute.id!)){  
+   final String adress='assets/app/logo1-${attribute.id.toString().substring(13)}.png' ;
+        return       
+        SizedBox(
+          width: screenWidth * .30,
+          height: 55,
+          child:Image.asset(adress) , 
+        );
+        }else{
+          return EMPTY_WIDGET;
+        }
+         
+   }
