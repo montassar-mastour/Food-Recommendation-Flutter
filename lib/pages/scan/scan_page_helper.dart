@@ -48,21 +48,22 @@ Widget buildButtonsRow(BuildContext context, ContinuousScanModel model) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          ElevatedButton.icon(
+          EMPTY_WIDGET,
+          // ElevatedButton.icon(
+          //   style: buttonStyle,
+          //   icon: const Icon(RankingFloatingActionButton.rankingIconData),
+          //   onPressed: () => openPersonalizedRankingPage(context),
+          //   label: Text(
+          //     appLocalizations.plural_compare_x_products(
+          //       model.getBarcodes().length,
+          //     ),
+          //   ),
+          // ),
+              ElevatedButton.icon(
             style: buttonStyle,
             icon: const Icon(Icons.cancel_outlined),
             onPressed: model.clearScanSession,
             label: Text(appLocalizations.clear),
-          ),
-          ElevatedButton.icon(
-            style: buttonStyle,
-            icon: const Icon(RankingFloatingActionButton.rankingIconData),
-            onPressed: () => openPersonalizedRankingPage(context),
-            label: Text(
-              appLocalizations.plural_compare_x_products(
-                model.getBarcodes().length,
-              ),
-            ),
           ),
         ],
       ),
