@@ -70,43 +70,43 @@ class _SummaryCardState extends State<SummaryCard> {
   int totalPrintableRows = 10000;
   String? descript;
   final List<Attribute> liste = <Attribute>[];
-  List<Attribute> get_grp(String? desc,BuildContext context){
-       Language.build(context);
-      final List<Attribute> grp = <Attribute>[];
-      final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_Fruits de mer'];
-      if(desc != null){
-        String? attributeName;
-        for(final String attributeId in attributees ){
-                    switch (attributeId){ 
-      case 'allergens_no_Kiwi' : attributeName = Language.kiwi;break;
-      case 'allergens_no_Pêche' : attributeName = Language.peach ;break;
-      case 'allergens_no_Pomme' : attributeName = Language.apple ;break;
-      case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
-      case 'allergens_no_Amande' : attributeName = Language.almond ;break;
-      case 'allergens_no_Noix' : attributeName = Language.nut ;break;
-      case 'allergens_no_Noisettes' : attributeName = Language.hazelnut ;break;
-      case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
-        }
-           final String importanceId = widget._productPreferences.getImportanceIdForAttributeId(attributeId);
-          if(PreferenceImportance.ID_MANDATORY == importanceId || PreferenceImportance.ID_IMPORTANT == importanceId ){
-            final Attribute attributee = Attribute(id: attributeId,name: attributeName);
-                   if(desc.contains(attributeName!)|| descript!.contains(attributeName.toLowerCase()))
-            {
-              attributee.title ='contient : ${attributee.name}';
-              attributee.status='known';
-              attributee.match=0.0;
-              grp.add(attributee);
-            }else{
-            attributee.title = 'Ne contient pas : ${attributee.name}';
-             attributee.status='known';
-             attributee.match=100.0;
-             grp.add(attributee);
-            }
-        }
-        }
-      }
-    return grp;
-  }
+  // List<Attribute> get_grp(String? desc,BuildContext context){
+  //      Language.build(context);
+  //     final List<Attribute> grp = <Attribute>[];
+  //     final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_Fruits de mer'];
+  //     if(desc != null){
+  //       String? attributeName;
+  //       for(final String attributeId in attributees ){
+  //                   switch (attributeId){ 
+  //     case 'allergens_no_Kiwi' : attributeName = Language.kiwi;break;
+  //     case 'allergens_no_Pêche' : attributeName = Language.peach ;break;
+  //     case 'allergens_no_Pomme' : attributeName = Language.apple ;break;
+  //     case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
+  //     case 'allergens_no_Amande' : attributeName = Language.almond ;break;
+  //     case 'allergens_no_Noix' : attributeName = Language.nut ;break;
+  //     case 'allergens_no_Noisettes' : attributeName = Language.hazelnut ;break;
+  //     case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
+  //       }
+  //          final String importanceId = widget._productPreferences.getImportanceIdForAttributeId(attributeId);
+  //         if(PreferenceImportance.ID_MANDATORY == importanceId || PreferenceImportance.ID_IMPORTANT == importanceId ){
+  //           final Attribute attributee = Attribute(id: attributeId,name: attributeName);
+  //                  if(desc.contains(attributeName!)|| descript!.contains(attributeName.toLowerCase()))
+  //           {
+  //             attributee.title ='contient : ${attributee.name}';
+  //             attributee.status='known';
+  //             attributee.match=0.0;
+  //             grp.add(attributee);
+  //           }else{
+  //           attributee.title = 'Ne contient pas : ${attributee.name}';
+  //            attributee.status='known';
+  //            attributee.match=100.0;
+  //            grp.add(attributee);
+  //           }
+  //       }
+  //       }
+  //     }
+  //   return grp;
+  // }
   // For some reason, special case for "label" attributes
   final Set<String> _attributesToExcludeIfStatusIsUnknown = <String>{};
   Future<List<RobotoffQuestion>>? _productQuestions;
@@ -133,14 +133,12 @@ class _SummaryCardState extends State<SummaryCard> {
           header: FutureBuilder<String?>(
             future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( widget._product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
               builder:(context,snapshot){
-                        if(snapshot.hasData) 
+                        if(!snapshot.hasData) 
                         {
-                          return  _buildProductCompatibilityHeader(context,liste);
-                       
+                        return const CircularProgressIndicator();
                         }else{
-                        final liste = get_grp(snapshot.data,context);
-                        
-                        }return const CircularProgressIndicator();
+                       return  _buildProductCompatibilityHeader(context,liste);
+                        }
                }
            ),
           margin: EdgeInsets.zero,
@@ -180,35 +178,36 @@ class _SummaryCardState extends State<SummaryCard> {
             minHeight: parentHeight,
             maxHeight: double.infinity,
             child: buildProductSmoothCard(
-              header: FutureBuilder<String?>(
+          header: FutureBuilder<String?>(
             future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( widget._product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
               builder:(context,snapshot){
-                        if(snapshot.hasData) 
+                        if(!snapshot.hasData) 
                         {
-                       final liste = get_grp(snapshot.data,context);
-                        return  _buildProductCompatibilityHeader(context,liste);
-                        }else{
                         return const CircularProgressIndicator();
+                        }else{
+                       return  _buildProductCompatibilityHeader(context,liste);
                         }
                }
            ),
-              margin: EdgeInsets.zero,
-              body: FutureBuilder<String?>(
+          margin: EdgeInsets.zero,
+          body:  FutureBuilder<String?>(
             future: OpenFoodAPIClient.getdescription(ProductQueryConfiguration( widget._product.barcode!,language: ProductQuery.getLanguage(),country: ProductQuery.getCountry(),fields: <ProductField>[ProductField.KNOWLEDGE_PANELS],version: ProductQueryVersion.v2,)) ,
               builder:(context,snapshot){
-                        if(snapshot.hasData) 
+                        if(!snapshot.hasData) 
                         {
-                          descript = snapshot.data;
-                             return  Padding(
+                          return const CircularProgressIndicator();
+                        }else{
+      
+                              descript = snapshot.data;
+                              
+                           return  Padding(
                              padding: SMOOTH_CARD_PADDING,
                               child: _buildSummaryCardContent(context),
                               );
-                        }else{
-      return const CircularProgressIndicator();
               }
               }
             )
-            ),
+        ),
           ),
         ),
         Column(
@@ -508,7 +507,7 @@ class _SummaryCardState extends State<SummaryCard> {
     }
     Language.build(context);
         if(attributeGroup.id == AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS){
-      final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_Fruits de mer'];
+      final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_Fruits_de_mer'];
       if(descript != null){
          String? attributeName ;
         for(final String attributeId in attributees ){
@@ -520,13 +519,16 @@ class _SummaryCardState extends State<SummaryCard> {
       case 'allergens_no_Amande' : attributeName = Language.almond ;break;
       case 'allergens_no_Noix' : attributeName = Language.nut ;break;
       case 'allergens_no_Noisettes' : attributeName = Language.hazelnut ;break;
-      case 'allergens_no_Fruits de mer' : attributeName = Language.shellfish ;break;
+      case 'allergens_no_Fruits_de_mer' : attributeName = Language.shellfish ;break;
         }
            
 
            final String importanceId = widget._productPreferences.getImportanceIdForAttributeId(attributeId);
           if(importance == importanceId){
             final Attribute attributee = Attribute(id: attributeId,name: attributeName);
+              final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
+            String languetest = appLocalizations.yes;
+            if(languetest== 'Oui' || languetest=='Yes'){
                    if(descript!.contains(attributeName!)|| descript!.contains(attributeName.toLowerCase()))
             {
               attributee.title ='contient : ${attributee.name}';
@@ -538,6 +540,21 @@ class _SummaryCardState extends State<SummaryCard> {
              attributee.status='known';
              attributee.match=100.0;
               result.add(attributee);
+            }
+            }else{
+                     if(descript!.contains(attributeName!))
+            {
+              attributee.title ='contient : ${attributee.name}';
+              attributee.status='known';
+              attributee.match=0.0;
+              result.add(attributee);
+            }else{
+            attributee.title = 'Ne contient pas : ${attributee.name}';
+             attributee.status='known';
+             attributee.match=100.0;
+              result.add(attributee);
+            }
+
             }
         }
         }

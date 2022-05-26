@@ -90,7 +90,7 @@ Language.build(context);
       case 'Amande' : att.name = Language.almond ;break;
       case 'Noix' : att.name = Language.nut ;break;
       case 'Noisettes' : att.name = Language.hazelnut ;break;
-      case 'Fruits de mer' : att.name = Language.shellfish ;break;
+      case 'Fruits_de_mer' : att.name = Language.shellfish ;break;
         }
       }
     }
