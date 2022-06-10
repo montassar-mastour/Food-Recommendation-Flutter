@@ -59,7 +59,6 @@ class _ProfilPageState extends State<ProfilPage> {
                  future:DataBaseConfiguration.getData(),
         builder:(context,snapshot){
        // ignore: always_put_control_body_on_new_line, avoid_print
-       if(snapshot.hasError) print(snapshot.error);
         if( snapshot.hasData) 
         {
             Map<String,dynamic>? Data = snapshot.data ;
@@ -71,9 +70,9 @@ class _ProfilPageState extends State<ProfilPage> {
       children.add(_getServingField_age(Data['age'].toString(),age_controller));
       children.add(_getServingField_length(Data['length'].toString(),length_controller));
       children.add(_getServingField_weight(Data['weight'].toString(),weight_controller));
-      children.add(_getServingField_f_r(Data['food_restriction'].toString(), f_r_controller));
-      children.add(_getServingField_allergy(Data['allergy'].toString(),allergy_controller));
-      children.add(_getServingField_another_allergy(Data['another_allergy'].toString(),another_alergy_controller));
+      // children.add(_getServingField_f_r(Data['food_restriction'].toString(), f_r_controller));
+      // children.add(_getServingField_allergy(Data['allergy'].toString(),allergy_controller));
+      // children.add(_getServingField_another_allergy(Data['another_allergy'].toString(),another_alergy_controller));
       children.add(_getServingField_email(Data['email'].toString(),email_controller));
       children.add(_getServingField_password(Data['password'].toString(),password_controller));
       children.add(_addCancelSaveButtons (Data));
@@ -86,7 +85,12 @@ class _ProfilPageState extends State<ProfilPage> {
         ),
       );
         }else{
-      return const CircularProgressIndicator();
+      return SizedBox(
+       height: MediaQuery.of(context).size.height / 1.3,
+       child: Center(
+           child: CircularProgressIndicator(),
+            ),
+        );
         }
       })
       
@@ -233,31 +237,31 @@ class _ProfilPageState extends State<ProfilPage> {
             )
     );
   }
-    Widget _getServingField_f_r(String string,TextEditingController controller ) {
+//     Widget _getServingField_f_r(String string,TextEditingController controller ) {
     
- controller.text = string ;
+//  controller.text = string ;
     
-    return Padding(
-      padding: const EdgeInsets.only(bottom: VERY_LARGE_SPACE),
-      child: TextFormField(
+//     return Padding(
+//       padding: const EdgeInsets.only(bottom: VERY_LARGE_SPACE),
+//       child: TextFormField(
 
-              controller: controller,
-              textInputAction: TextInputAction.next,
-              // ignore: prefer_const_constructors
-              decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
-          labelText: 'Food Restriction',
-        ),
-              autofillHints: const <String>[AutofillHints.name],
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'sign_up_page_display_name_error_empty';
-                }
-                return null;
-              },
-            )
-    );
-  }
+//               controller: controller,
+//               textInputAction: TextInputAction.next,
+//               // ignore: prefer_const_constructors
+//               decoration: InputDecoration(
+//           border: const UnderlineInputBorder(),
+//           labelText: 'Food Restriction',
+//         ),
+//               autofillHints: const <String>[AutofillHints.name],
+//               validator: (String? value) {
+//                 if (value == null || value.isEmpty) {
+//                   return 'sign_up_page_display_name_error_empty';
+//                 }
+//                 return null;
+//               },
+//             )
+//     );
+//   }
     Widget _getServingField_email(String string,TextEditingController controller ) {
     
  controller.text = string ;
@@ -285,54 +289,54 @@ class _ProfilPageState extends State<ProfilPage> {
   
 
 
-    Widget _getServingField_another_allergy(String string,TextEditingController controller ) {
+//     Widget _getServingField_another_allergy(String string,TextEditingController controller ) {
     
- controller.text = string ;
+//  controller.text = string ;
     
-    return Padding(
-      padding: const EdgeInsets.only(bottom: VERY_LARGE_SPACE),
-      child: TextFormField(
-              controller: controller,
-              textInputAction: TextInputAction.next,
-              // ignore: prefer_const_constructors
-              decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
-          labelText: 'Another Allergy',
-        ),
-              autofillHints: const <String>[AutofillHints.name],
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'sign_up_page_display_name_error_empty';
-                }
-                return null;
-              },
-            )
-    );
-  }
-  Widget _getServingField_allergy(String string,TextEditingController controller ) {
+//     return Padding(
+//       padding: const EdgeInsets.only(bottom: VERY_LARGE_SPACE),
+//       child: TextFormField(
+//               controller: controller,
+//               textInputAction: TextInputAction.next,
+//               // ignore: prefer_const_constructors
+//               decoration: InputDecoration(
+//           border: const UnderlineInputBorder(),
+//           labelText: 'Another Allergy',
+//         ),
+//               autofillHints: const <String>[AutofillHints.name],
+//               validator: (String? value) {
+//                 if (value == null || value.isEmpty) {
+//                   return 'sign_up_page_display_name_error_empty';
+//                 }
+//                 return null;
+//               },
+//             )
+//     );
+//   }
+//   Widget _getServingField_allergy(String string,TextEditingController controller ) {
     
- controller.text = string ;
+//  controller.text = string ;
     
-    return Padding(
-      padding: const EdgeInsets.only(bottom: VERY_LARGE_SPACE),
-      child: TextFormField(
-              controller: controller,
-              textInputAction: TextInputAction.next,
-              // ignore: prefer_const_constructors
-              decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
-          labelText: 'Allergy',
-        ),
-              autofillHints: const <String>[AutofillHints.name],
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'sign_up_page_display_name_error_empty';
-                }
-                return null;
-              },
-            )
-    );
-  }
+//     return Padding(
+//       padding: const EdgeInsets.only(bottom: VERY_LARGE_SPACE),
+//       child: TextFormField(
+//               controller: controller,
+//               textInputAction: TextInputAction.next,
+//               // ignore: prefer_const_constructors
+//               decoration: InputDecoration(
+//           border: const UnderlineInputBorder(),
+//           labelText: 'Allergy',
+//         ),
+//               autofillHints: const <String>[AutofillHints.name],
+//               validator: (String? value) {
+//                 if (value == null || value.isEmpty) {
+//                   return 'sign_up_page_display_name_error_empty';
+//                 }
+//                 return null;
+//               },
+//             )
+//     );
+//   }
 
     Widget _getServingField_password(String string,TextEditingController controller ) {
     
@@ -400,7 +404,7 @@ if((name_controller.text !=Data!['name'].toString())||(lastname_controller.text 
                 Navigator.pop(context);
                 setState(() {
                  List<String> attributes  =[Data['id'].toString(),name_controller.text,lastname_controller.text,age_controller.text,length_controller.text,
-                  weight_controller.text,f_r_controller.text,allergy_controller.text,another_alergy_controller.text,email_controller.text,password_controller.text];
+                  weight_controller.text,email_controller.text,password_controller.text];
                   DataBaseConfiguration.updateData(attributes);
                 });
                 if((email_controller.text !=Data['email'].toString())||(password_controller.text !=Data['password'].toString())){

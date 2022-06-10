@@ -34,6 +34,9 @@ class Language {
    static String? sea_food;
    static String? nuts;
    static String? fruit_and_vegetable;
+    static String? contain;
+     static String? D_contain;
+
  static Widget build(BuildContext context) {
   final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
   
@@ -65,6 +68,8 @@ Other='Autres';
 sea_food='Fruit de mer';
 nuts='Fruit à coque';
 fruit_and_vegetable='Fruit et légume';
+contain='contient: ';
+D_contain='Ne contient pas: ';
 }
 else if( appLocalizations.yes=='Yes'){
 email='email';
@@ -94,6 +99,8 @@ Other='Other';
 sea_food='Sea Food';
 nuts='Nuts';
 fruit_and_vegetable='Fruit and Vegetable';
+contain='Contain: ';
+D_contain='Does not contain: ';
 }
 else if( appLocalizations.yes=='نعم'){
 email='بريد الالكتروني';
@@ -122,6 +129,8 @@ Other='آخر';
 sea_food='مأكولات بحرية';
 nuts='المكسرات';
 fruit_and_vegetable='فواكه و خضروات';
+contain=' تحتوي :';
+D_contain='لا تحتوي :';
 }
 return EMPTY_WIDGET;
   }

@@ -510,16 +510,17 @@ class _SummaryCardState extends State<SummaryCard> {
       final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_Fruits_de_mer'];
       if(descript != null){
          String? attributeName ;
+                 String? attributeName2;
         for(final String attributeId in attributees ){
              switch (attributeId){ 
-      case 'allergens_no_Kiwi' : attributeName = Language.kiwi;break;
-      case 'allergens_no_Pêche' : attributeName = Language.peach ;break;
-      case 'allergens_no_Pomme' : attributeName = Language.apple ;break;
-      case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
-      case 'allergens_no_Amande' : attributeName = Language.almond ;break;
-      case 'allergens_no_Noix' : attributeName = Language.nut ;break;
-      case 'allergens_no_Noisettes' : attributeName = Language.hazelnut ;break;
-      case 'allergens_no_Fruits_de_mer' : attributeName = Language.shellfish ;break;
+      case 'allergens_no_Kiwi' : attributeName = Language.kiwi ;attributeName2='Kiwi' ;break;
+      case 'allergens_no_Pêche' : attributeName = Language.peach  ;attributeName2='Pêche';break;
+      case 'allergens_no_Pomme' : attributeName = Language.apple  ;attributeName2='Pomme';break;
+      case 'allergens_no_Fraise' : attributeName = Language.strawberry  ;attributeName2='Fraise' ;break;
+      case 'allergens_no_Amande' : attributeName = Language.almond ;attributeName2='Amande' ;break;
+      case 'allergens_no_Noix' : attributeName = Language.nut ;attributeName2='Noix' ;break;
+      case 'allergens_no_Noisettes' : attributeName = Language.hazelnut;attributeName2='Noisette' ;break;
+      case 'allergens_no_Fruits_de_mer' : attributeName = Language.shellfish ;attributeName2='Fruits de mer' ;break;
         }
            
 
@@ -527,16 +528,17 @@ class _SummaryCardState extends State<SummaryCard> {
           if(importance == importanceId){
             final Attribute attributee = Attribute(id: attributeId,name: attributeName);
               final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-            String languetest = appLocalizations.yes;
+          final  String languetest = appLocalizations.yes;
+
             if(languetest== 'Oui' || languetest=='Yes'){
-                   if(descript!.contains(attributeName!)|| descript!.contains(attributeName.toLowerCase()))
+                   if(descript!.contains(attributeName!)|| descript!.contains(attributeName.toLowerCase()) ||  descript!.contains(attributeName2!) || descript!.contains(attributeName2.toLowerCase()) ||(attributeName=='strawberry' || attributeName=='Strawberry' && (descript!.contains('strawberries') || descript!.contains('Strawberries')  )))
             {
-              attributee.title ='contient : ${attributee.name}';
+              attributee.title = Language.contain!+ attributee.name!;
               attributee.status='known';
               attributee.match=0.0;
               result.add(attributee);
             }else{
-            attributee.title = 'Ne contient pas : ${attributee.name}';
+            attributee.title = Language.D_contain! + attributee.name!;
              attributee.status='known';
              attributee.match=100.0;
               result.add(attributee);
@@ -544,12 +546,12 @@ class _SummaryCardState extends State<SummaryCard> {
             }else{
                      if(descript!.contains(attributeName!))
             {
-              attributee.title ='contient : ${attributee.name}';
+              attributee.title =Language.contain!+ attributee.name!;
               attributee.status='known';
               attributee.match=0.0;
               result.add(attributee);
             }else{
-            attributee.title = 'Ne contient pas : ${attributee.name}';
+            attributee.title = Language.D_contain! + attributee.name!;
              attributee.status='known';
              attributee.match=100.0;
               result.add(attributee);

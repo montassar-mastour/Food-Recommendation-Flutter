@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (login) {
-     update_local(context);
+    //  update_local(context);
       Navigator.pop(context);
     } else {
       setState(() {
@@ -203,24 +203,24 @@ class _LoginPageState extends State<LoginPage> {
                   ),
 
                   //Forgot password
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute<Widget>(
-                          builder: (BuildContext context) =>
-                              const ForgotPasswordPage(),
-                        ),
-                      );
-                    },
-                    child: Text(
-                      appLocalizations.forgot_password,
-                      style: theme.textTheme.bodyText2?.copyWith(
-                        fontSize: 18.0,
-                        color: theme.colorScheme.primary,
-                      ),
-                    ),
-                  ),
+                  // TextButton(
+                  //   onPressed: () {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute<Widget>(
+                  //         builder: (BuildContext context) =>
+                  //             const ForgotPasswordPage(),
+                  //       ),
+                  //     );
+                  //   },
+                  //   child: Text(
+                  //     appLocalizations.forgot_password,
+                  //     style: theme.textTheme.bodyText2?.copyWith(
+                  //       fontSize: 18.0,
+                  //       color: theme.colorScheme.primary,
+                  //     ),
+                  //   ),
+                  // ),
 
                   const Spacer(flex: 4),
 
@@ -279,12 +279,17 @@ class _LoginPageState extends State<LoginPage> {
          final AttributeGroup group= widget.productPreferences.getAttributeGroup('allergens_no_gluten');
      final Map<String, dynamic> get_user = await DataBaseConfiguration.getData();
     final Map<String,dynamic> get =  await DataBaseConfiguration.getDataAllergy(get_user['id'].toString());
-   
+    print(get);
      Attribute attributt;
      for(attributt in group.attributes!){
+       if(attributt.id.toString()=='allergens_no_Pêche'){
+            widget.userPreferences.setImportance(attributt.id.toString(), get['allergens_no_Peche'].toString()) ;
+                 widget.userPreferences.setWHO(attributt.id.toString(), get['who_allergens_no_Peche'].toString() );
+                 
+       }else{
                  widget.userPreferences.setImportance(attributt.id.toString(), get[attributt.id].toString()) ;
                  widget.userPreferences.setWHO(attributt.id.toString(), get['who_${attributt.id}'].toString() );
-                  }
+       }}
                   widget.productPreferences.notify();
                   
  }

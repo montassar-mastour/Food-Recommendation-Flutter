@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:openfoodfacts/model/Attribute.dart';
+import 'package:openfoodfacts/model/AttributeGroup.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
@@ -176,6 +178,15 @@ return Center(
               onPressed: () async {
                 UserManagementHelper.logout();
                 await context.read<ProductPreferences>().resetImportances();
+               List<AttributeGroup> lis= productPreferences.attributeGroups!;
+               for(AttributeGroup Attgrp in lis){
+                 List<Attribute> lis2 = Attgrp.attributes!;
+                 for(Attribute att in lis2){
+                   String ch='who_'+ att.id.toString();
+                userPreferences.setWHO(ch,'');
+                 }
+               }
+                
                 Navigator.pop(context);
                 setState(() {});
               },

@@ -42,6 +42,20 @@ abstract class AbstractUserPreferences {
           height: 50,
           child:Image.asset('assets/app/logo1-hassassia.png') , 
         );
+        }else
+          if(attribute=='attribute:nutritional_quality'){ 
+        return   SizedBox(
+          width: 100,
+          height: 50,
+          child:Image.asset('assets/app/logo1-nutritional.jpeg') , 
+        );
+        }else
+          if(attribute=='attribute:ingredients_analysis'){
+        return   SizedBox(
+          width: 150,
+          height: 50,
+          child:Image.asset('assets/app/logo1-ingredients.png') , 
+        );
         }else{
           return EMPTY_WIDGET;
         }

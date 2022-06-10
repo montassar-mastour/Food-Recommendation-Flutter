@@ -210,6 +210,7 @@ class ProductPreferences extends ProductPreferencesManager with ChangeNotifier {
         ),
       ),
     );
+    
     notify();
   }
 

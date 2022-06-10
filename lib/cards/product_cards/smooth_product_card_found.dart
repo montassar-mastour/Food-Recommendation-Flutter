@@ -163,30 +163,32 @@ class SmoothProductCardFound extends StatelessWidget {
       final List<String> attributees =['allergens_no_Kiwi','allergens_no_Pêche','allergens_no_Pomme','allergens_no_Fraise','allergens_no_Amande','allergens_no_Noix','allergens_no_Noisettes','allergens_no_Fruits_de_mer'];
       if(desc != null){
         String? attributeName;
+        String? attributeName2;
         for(final String attributeId in attributees ){
                    switch (attributeId){ 
-      case 'allergens_no_Kiwi' : attributeName = Language.kiwi;break;
-      case 'allergens_no_Pêche' : attributeName = Language.peach ;break;
-      case 'allergens_no_Pomme' : attributeName = Language.apple ;break;
-      case 'allergens_no_Fraise' : attributeName = Language.strawberry ;break;
-      case 'allergens_no_Amande' : attributeName = Language.almond ;break;
-      case 'allergens_no_Noix' : attributeName = Language.nut ;break;
-      case 'allergens_no_Noisette' : attributeName = Language.hazelnut ;break;
-      case 'allergens_no_Fruits_de_mer' : attributeName = Language.shellfish ;break;
+      case 'allergens_no_Kiwi' : attributeName = Language.kiwi ;attributeName2='Kiwi';break;
+      case 'allergens_no_Pêche' : attributeName = Language.peach ;attributeName2='Pêche' ;break;
+      case 'allergens_no_Pomme' : attributeName = Language.apple ;attributeName2='Pomme' ;break;
+      case 'allergens_no_Fraise' : attributeName = Language.strawberry ;attributeName2='Fraise' ;break;
+      case 'allergens_no_Amande' : attributeName = Language.almond ;attributeName2='Amande' ;break;
+      case 'allergens_no_Noix' : attributeName = Language.nut ;attributeName2='Noix' ;break;
+      case 'allergens_no_Noisette' : attributeName = Language.hazelnut ;attributeName2='Noisette' ;break;
+      case 'allergens_no_Fruits_de_mer' : attributeName = Language.shellfish ;attributeName2='Fruits de mer' ;break;
         }
 
            final String importanceId = productPreferences.getImportanceIdForAttributeId(attributeId);
           if(PreferenceImportance.ID_MANDATORY == importanceId || PreferenceImportance.ID_IMPORTANT == importanceId ){
             final Attribute attributee = Attribute(id: attributeId,name: attributeName);
            if(languetest== 'Oui' || languetest=='Yes'){
-                   if(desc.contains(attributeName!) ||  desc.contains(attributeName.toLowerCase()))
+                   if(desc.contains(attributeName!) ||  desc.contains(attributeName.toLowerCase()) ||
+                   (desc.contains(attributeName2!)) || (desc.contains(attributeName2.toLowerCase()))||(attributeName=='strawberry' || attributeName=='Strawberry' && (desc.contains('strawberries') || desc.contains('Strawberries')  )))
             {
-              attributee.title ='contient : ${attributee.name}';
+              attributee.title =Language.contain!+ attributee.name!;
               attributee.status='known';
               attributee.match=0.0;
               grp.add(attributee);
             }else{
-            attributee.title = 'Ne contient pas : ${attributee.name}';
+            attributee.title = Language.D_contain! + attributee.name!;
              attributee.status='known';
              attributee.match=100.0;
              grp.add(attributee);
@@ -194,12 +196,12 @@ class SmoothProductCardFound extends StatelessWidget {
           }else{
              if(desc.contains(attributeName!))
             {
-              attributee.title ='contient : ${attributee.name}';
+              attributee.title =Language.contain!+ attributee.name!;
               attributee.status='known';
               attributee.match=0.0;
               grp.add(attributee);
             }else{
-            attributee.title = 'Ne contient pas : ${attributee.name}';
+            attributee.title = Language.D_contain! + attributee.name!;
              attributee.status='known';
              attributee.match=100.0;
              grp.add(attributee);

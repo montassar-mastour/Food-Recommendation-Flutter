@@ -74,7 +74,7 @@ class AttributeButton extends StatelessWidget {
                final List<AttributeGroup> groups= productPreferences.attributeGroups!;
                final AttributeGroup group = (groups.where((AttributeGroup g) => g.id == 'allergens')).first;
                 if(group.attributes!.contains(attribute)){
-                   if(_nextValues[importanceId] == PreferenceImportance.ID_IMPORTANT){_confirm_who(context, importanceId);  }
+                   if(_nextValues[importanceId] == PreferenceImportance.ID_MANDATORY){_confirm_who(context, importanceId);  }
                 else{
                   if(_nextValues[importanceId] == PreferenceImportance.ID_NOT_IMPORTANT){  userPreferences.setWHO('who_${attribute.id!}','');   }
                 }
@@ -142,7 +142,7 @@ void _confirm_who(BuildContext context,String importanceId) {
    final String adress='assets/app/logo1-${attribute.id.toString().substring(13)}.png' ;
         return       
         SizedBox(
-          width: screenWidth * .30,
+          width: screenWidth * .20,
           height: 55,
           child:Image.asset(adress) , 
         );

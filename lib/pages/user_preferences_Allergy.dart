@@ -53,6 +53,18 @@ import 'package:smooth_app/pages/user_preferences_attribute_group.dart';
     ];
      late AbstractUserPreferences abstractUserPreferences;
       Language.build(context);
+           for(final Attribute attrib in group.attributes! ){
+             switch (attrib.id){ 
+      case 'allergens_no_Kiwi' : attrib.name = Language.kiwi;break;
+      case 'allergens_no_Pêche' : attrib.name = Language.peach ;break;
+      case 'allergens_no_Pomme' : attrib.name = Language.apple ;break;
+      case 'allergens_no_Fraise' : attrib.name = Language.strawberry ;break;
+      case 'allergens_no_Amande' : attrib.name = Language.almond ;break;
+      case 'allergens_no_Noix' : attrib.name = Language.nut ;break;
+      case 'allergens_no_Noisettes' : attrib.name = Language.hazelnut ;break;
+      case 'allergens_no_Fruits_de_mer' : attrib.name = Language.shellfish ;break;
+        }
+           }
      final List<Attribute> list_1 = [group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_GLUTEN).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_MILK).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_EGGS).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_SESAME_SEEDS).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_LUPIN).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_SOYBEANS).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_MUSTARD).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_SULPHUR_DIOXIDE_AND_SULPHITES).single];
        final List<Attribute> list_2 = [group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_Fruits_de_mer).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_CRUSTACEANS).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_FISH).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_MOLLUSCS).single];        
        final List<Attribute> list_3 = [group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_NUTS).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_Amande).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_Noix).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_Noisettes).single,group.attributes!.where((e) => e.id==Attribute.ATTRIBUTE_ALLERGENS_NO_PEANUTS).single];        

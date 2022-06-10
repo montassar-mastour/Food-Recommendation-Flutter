@@ -1,16 +1,23 @@
 // ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings, avoid_void_async
-
+                                                              
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geocoding/geocoding.dart' as pre ;
 import 'package:location/location.dart';
+import 'package:openfoodfacts/model/AttributeGroup.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/Data_Base_Api/user_management.dart';
+import 'package:smooth_app/data_models/product_preferences.dart';
+import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_text_form_field.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
 import 'package:smooth_app/language/language.dart';
+import 'package:smooth_app/pages/abstract_user_preferences.dart';
+import 'package:smooth_app/pages/user_preferences_food.dart';
+import 'package:smooth_app/themes/theme_provider.dart';
 
 /// Sign Up Page. Pop's true if the sign up was successful.
 class SignUpPage extends StatefulWidget {
@@ -30,9 +37,9 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _displayAgeController = TextEditingController();
   final TextEditingController _displayLengthController = TextEditingController();
   final TextEditingController _displayWeightController = TextEditingController();
-  final TextEditingController _displayFRController = TextEditingController();
- final TextEditingController _displayAllergyController = TextEditingController();
- final TextEditingController _displayAnotherAllergyController = TextEditingController();
+//   final TextEditingController _displayFRController = TextEditingController();
+//  final TextEditingController _displayAllergyController = TextEditingController();
+//  final TextEditingController _displayAnotherAllergyController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _password1Controller = TextEditingController();
   final TextEditingController _password2Controller = TextEditingController();
@@ -43,25 +50,22 @@ class _SignUpPageState extends State<SignUpPage> {
     final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     final Size size = MediaQuery.of(context).size;
         Language.build(context);
-
-    // TODO(monsieurtanuki): translations
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          appLocalizations.sign_up_page_title,
-          style: TextStyle(color: theme.colorScheme.onBackground),
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: theme.colorScheme.primary),
-      ),
-      body: Form(
-        onChanged: () => setState(() {}),
-        key: _formKey,
-        child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
-          children: <Widget>[
-            SmoothTextFormField(
+            final ThemeData themeData = Theme.of(context);
+            final UserPreferences userPreferences = context.watch<UserPreferences>();
+               final ProductPreferences productPreferences =
+        context.watch<ProductPreferences>();
+final AbstractUserPreferences items =   
+  UserPreferencesFood(
+        productPreferences: productPreferences,
+        setState: setState,
+        context: context,
+        userPreferences: userPreferences,
+        appLocalizations: appLocalizations,
+        themeData: themeData,
+      );
+       final List<Widget> allchildren = <Widget>[];
+                    allchildren.addAll(items.getContent());
+       allchildren.add( SmoothTextFormField(
               textInputType: TextInputType.name,
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayNameController,
@@ -74,10 +78,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   return appLocalizations.sign_up_page_display_name_error_empty;
                 }
                 return null;
-              },
-            ),
-            const SizedBox(height: space),
-            SmoothTextFormField(
+                },
+             ));
+             allchildren.add(const SizedBox(height: space));
+             allchildren.add(SmoothTextFormField(
               textInputType: TextInputType.name,
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayLastNameController,
@@ -90,9 +94,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
                 return null;
               },
-            ),
-            const SizedBox(height: space),
-            SmoothTextFormField(
+            ));
+            allchildren.add(const SizedBox(height: space));
+            allchildren.add(SmoothTextFormField(
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayAgeController,
               textInputAction: TextInputAction.next,
@@ -105,9 +109,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
                 return null;
               },
-            ),
-            const SizedBox(height: space),
-            SmoothTextFormField(
+            ));
+            allchildren.add(const SizedBox(height: space));
+            allchildren.add(SmoothTextFormField(
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayLengthController,
               textInputAction: TextInputAction.next,
@@ -120,9 +124,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
                 return null;
               },
-            ),
-            const SizedBox(height: space),
-            SmoothTextFormField(
+            ));
+            allchildren.add(const SizedBox(height: space));
+            allchildren.add(SmoothTextFormField(
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _displayWeightController,
               textInputAction: TextInputAction.next,
@@ -135,51 +139,49 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
                 return null;
               },
-            ),
-            const SizedBox(height: space),
-             SmoothTextFormField(
-              type: TextFieldTypes.PLAIN_TEXT,
-              controller: _displayFRController,
-              textInputAction: TextInputAction.next,
-              hintText: Language.food_restriction!,
-              prefixIcon: const Icon(Icons.food_bank),
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter the display food restraction you want to use';
-                }
-                return null;
-              },
-            ),
-               const SizedBox(height: space),
-             SmoothTextFormField(
-              type: TextFieldTypes.PLAIN_TEXT,
-              controller: _displayAllergyController,
-              textInputAction: TextInputAction.next,
-              hintText: Language.allergy!,
-              prefixIcon: const Icon(Icons.person),
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter the display Allergy you want to use';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: space),
-             SmoothTextFormField(
-              type: TextFieldTypes.PLAIN_TEXT,
-              controller: _displayAnotherAllergyController,
-              textInputAction: TextInputAction.next,
-              hintText: Language.another_allergy!,
-              prefixIcon: const Icon(Icons.person),
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter the display Another Allergy you want to use';
-                }
-                return null;
-              },
-            ),
-            const SizedBox(height: space),
-            SmoothTextFormField(
+             ));
+
+            // allchildren.add( SmoothTextFormField(
+            //   type: TextFieldTypes.PLAIN_TEXT,
+            //   controller: _displayFRController,
+            //   textInputAction: TextInputAction.next,
+            //   hintText: Language.food_restriction!,
+            //   prefixIcon: const Icon(Icons.food_bank),
+            //   validator: (String? value) {
+            //     if (value == null || value.isEmpty) {
+            //       return 'Please enter the display food restraction you want to use';
+            //     }
+            //     return null;
+            //   },
+            // ));
+            //   allchildren.add( const SizedBox(height: space));
+            // allchildren.add( SmoothTextFormField(
+            //   type: TextFieldTypes.PLAIN_TEXT,
+            //   controller: _displayAllergyController,
+            //   textInputAction: TextInputAction.next,
+            //   hintText: Language.allergy!,
+            //   prefixIcon: const Icon(Icons.person),
+            //   validator: (String? value) {
+            //     if (value == null || value.isEmpty) {
+            //       return 'Please enter the display Allergy you want to use';
+            //     }
+            //     return null;
+            //   },
+
+            // ));
+            // allchildren.add(const SizedBox(height: space));
+            //  SmoothTextFormField(
+            //   type: TextFieldTypes.PLAIN_TEXT,
+            //   controller: _displayAnotherAllergyController,
+            //   textInputAction: TextInputAction.next,
+            //   hintText: Language.another_allergy!,
+            //   prefixIcon: const Icon(Icons.person),
+            //   validator: (String? value) {
+            //     return null;
+            //   },
+            // );
+           allchildren.add( const SizedBox(height: space));
+            allchildren.add(SmoothTextFormField(
               textInputType: TextInputType.emailAddress,
               type: TextFieldTypes.PLAIN_TEXT,
               controller: _emailController,
@@ -191,15 +193,15 @@ class _SignUpPageState extends State<SignUpPage> {
                 if (value == null || value.isEmpty) {
                   return appLocalizations.sign_up_page_email_error_empty;
                 }
-                // if (!UserManagementHelper.isEmailValid(value)) {
-                //   return appLocalizations.sign_up_page_email_error_invalid;
-                // }
+                if (!UserManagementHelper.isEmailValid(value)) {
+                  return appLocalizations.sign_up_page_email_error_invalid;
+                }
                 return null;
               },
-            ),
+            ));
            
-            const SizedBox(height: space),
-            SmoothTextFormField(
+           allchildren.add( const SizedBox(height: space));
+           allchildren.add( SmoothTextFormField(
               type: TextFieldTypes.PASSWORD,
               controller: _password1Controller,
               textInputAction: TextInputAction.next,
@@ -215,9 +217,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
                 return null;
               },
-            ),
-            const SizedBox(height: space),
-            SmoothTextFormField(
+            ));
+            allchildren.add(const SizedBox(height: space));
+            allchildren.add(SmoothTextFormField(
               type: TextFieldTypes.PASSWORD,
               controller: _password2Controller,
               textInputAction: TextInputAction.next,
@@ -237,12 +239,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 }
                 return null;
               },
-            ),
-    
-            const SizedBox(height: space),
+            ));
+            allchildren.add(const SizedBox(height: space));
 
-            const SizedBox(height: space),
-            ElevatedButton(
+            allchildren.add(const SizedBox(height: space));
+            allchildren.add(ElevatedButton(
               onPressed: () async => _signUp(),
               child: Text(
                 appLocalizations.sign_up_page_action_button,
@@ -261,15 +262,34 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ));
+
+
+      
+    // TODO(monsieurtanuki): translations
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          appLocalizations.sign_up_page_title,
+          style: TextStyle(color: theme.colorScheme.onBackground),
+        ),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: theme.colorScheme.primary),
+      ),
+      body: Form(
+        onChanged: () => setState(() {}),
+        key: _formKey,
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: size.width * 0.05),
+          children: allchildren,
+          
         ),
       ),
     );
   }
 
   Future<void> _signUp() async {
-     
     setState(() {});
     if (!_formKey.currentState!.validate() ) {
       return;
@@ -304,7 +324,7 @@ PermissionStatus _permissionGranted;
       email: _emailController.text,
       password: _password1Controller.text,
     );
-   DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_displayFRController.text,_displayAllergyController.text,_displayAnotherAllergyController.text,_emailController.text,_password1Controller.text,local]);
+   DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_emailController.text,_password1Controller.text,local]);
     await UserManagementHelper.put(user);
   _saveAllergyData();
 

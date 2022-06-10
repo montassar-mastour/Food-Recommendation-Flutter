@@ -45,14 +45,7 @@ class _UserPreferencesPageState extends State<UserPreferencesPage> {
         appLocalizations: appLocalizations,
         themeData: themeData,
       ),
-      UserPreferencesSettings(
-        themeProvider: themeProvider,
-        setState: setState,
-        context: context,
-        userPreferences: userPreferences,
-        appLocalizations: appLocalizations,
-        themeData: themeData,
-      ),
+   
     ];
     if (userPreferences.devMode > 0) {
       items.add(

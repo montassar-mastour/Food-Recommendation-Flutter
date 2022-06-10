@@ -45,12 +45,9 @@ static Future <bool>login(UserManagement user) async{
       'age': attribute[2],
       'length': attribute[3],
      'weight': attribute[4],
-    'food_restriction':  attribute[5],
-    'allergy':  attribute[6],
-    'another_allergy':  attribute[7],
-    'email':  attribute[8],
-    'password' : attribute[9],
-    'location' : attribute[10]
+    'email':  attribute[5],
+    'password' : attribute[6],
+    'location' : attribute[7]
     
     });
     
@@ -67,11 +64,8 @@ static Future <bool>login(UserManagement user) async{
       'age': attribute[3],
       'length': attribute[4],
      'weight': attribute[5],
-    'food_restriction':  attribute[6],
-    'allergy':  attribute[7],
-    'another_allergy':  attribute[8],
-    'email':  attribute[9],
-    'password' : attribute[10]
+    'email':  attribute[6],
+    'password' : attribute[7]
     
     });
     }
@@ -89,15 +83,15 @@ static Future <bool>login(UserManagement user) async{
     const String filename='get_allergens.php';
     const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename;
        http.Response response = await http.post(Uri.parse(url),body: {
-       'user_id': user_id
+       'user_id': user_id  
     }); 
     return json.decode(response.body) as Map<String, dynamic>;
     
   }
     static void updateDataAllergy(Map<String,String> attribute) {
       const String key='subdomain';
-    const String filename='edit_allergens.php';
-    const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename;
+    const String filename='edit_allergy.php';
+    const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename; 
     http.post(Uri.parse(url),body: {
     'user_id' : attribute['user_id'],
     'allergens_no_gluten':  attribute['allergens_no_gluten'],
@@ -127,8 +121,23 @@ static Future <bool>login(UserManagement user) async{
     'who_allergens_no_fish' : attribute['who_allergens_no_fish'],
     'who_allergens_no_crustaceans' : attribute['who_allergens_no_crustaceans'],
     'who_allergens_no_molluscs' : attribute['who_allergens_no_molluscs'],
-    'who_allergens_no_sulphur_dioxide_and_sulphites' : attribute['who_allergens_no_sulphur_dioxide_and_sulphites']
-    
+    'who_allergens_no_sulphur_dioxide_and_sulphites' : attribute['who_allergens_no_sulphur_dioxide_and_sulphites'],
+    'who_allergens_no_Kiwi' : attribute['who_allergens_no_Kiwi'],
+    'who_allergens_no_Pêche' : attribute['who_allergens_no_Pêche'],
+    'who_allergens_no_Pomme' : attribute['who_allergens_no_Pomme'],
+    'who_allergens_no_Fraise' : attribute['who_allergens_no_Fraise'],
+    'who_allergens_no_Amande' : attribute['who_allergens_no_Amande'],
+    'who_allergens_no_Noix' : attribute['who_allergens_no_Noix'],
+    'who_allergens_no_Noisettes' : attribute['who_allergens_no_Noisettes'],
+    'who_allergens_no_Fruits_de_mer' : attribute['who_allergens_no_Fruits_de_mer'],
+    'allergens_no_Kiwi' : attribute['allergens_no_Kiwi'],
+    'allergens_no_Pêche' : attribute['allergens_no_Pêche'],
+    'allergens_no_Pomme' : attribute['allergens_no_Pomme'],
+    'allergens_no_Fraise' : attribute['allergens_no_Fraise'],
+    'allergens_no_Amande' : attribute['allergens_no_Amande'],
+    'allergens_no_Noix' : attribute['allergens_no_Noix'],
+    'allergens_no_Noisettes' : attribute['allergens_no_Noisettes'],
+    'allergens_no_Fruits_de_mer' : attribute['allergens_no_Fruits_de_mer']
     });
     }
   static UserManagement? user  ; 
