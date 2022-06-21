@@ -59,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     if (login) {
-    //  update_local(context);
+     update_local(context);
       Navigator.pop(context);
     } else {
       setState(() {
@@ -279,7 +279,6 @@ class _LoginPageState extends State<LoginPage> {
          final AttributeGroup group= widget.productPreferences.getAttributeGroup('allergens_no_gluten');
      final Map<String, dynamic> get_user = await DataBaseConfiguration.getData();
     final Map<String,dynamic> get =  await DataBaseConfiguration.getDataAllergy(get_user['id'].toString());
-    print(get);
      Attribute attributt;
      for(attributt in group.attributes!){
        if(attributt.id.toString()=='allergens_no_Pêche'){
