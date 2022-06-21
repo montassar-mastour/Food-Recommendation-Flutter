@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
+import 'package:smooth_app/helpers/ui_helpers.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
 import 'package:smooth_app/pages/user_preferences_Allergy.dart';
 import 'package:smooth_app/pages/user_preferences_attribute_group.dart';
@@ -72,10 +73,10 @@ Widget _build(BuildContext context,List<AttributeGroup> groups) {
                     update_server(groups);
                     // print(userPreferences.getImportance('allergens_no_gluten'));
                 }
-                return Stack() ;
+                return EMPTY_WIDGET ;
               },
               builder: (BuildContext context) {
-                return const SizedBox();
+                return EMPTY_WIDGET;
               }
               );
   
@@ -91,7 +92,7 @@ Widget _build(BuildContext context,List<AttributeGroup> groups) {
       
     ];
      
-    result.add(_build(context,groups));
+   
     for (final AttributeGroup group in groups) {
      late AbstractUserPreferences abstractUserPreferences;
       if(group.id==AttributeGroup.ATTRIBUTE_GROUP_ALLERGENS){ 
@@ -126,7 +127,7 @@ Widget _build(BuildContext context,List<AttributeGroup> groups) {
 
      
     }
-   
+    result.add(_build(context,groups));
     return result;
   }
 

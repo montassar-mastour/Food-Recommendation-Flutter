@@ -1,4 +1,4 @@
-// ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings, avoid_void_async
+// ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings, avoid_void_async, prefer_const_constructors, await_only_futures
                                                               
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,6 +13,7 @@ import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_text_form_field.dart';
+import 'package:smooth_app/helpers/ui_helpers.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
 import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
@@ -325,25 +326,52 @@ PermissionStatus _permissionGranted;
       password: _password1Controller.text,
     );
    DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_emailController.text,_password1Controller.text,local]);
-    await UserManagementHelper.put(user);
-  _saveAllergyData();
+  
 
-    await showDialog<void>(
+
+await showDialog<void>(
       context: context,
-      builder: (BuildContext context) => SmoothAlertDialog(
+      builder: (BuildContext context) => FutureBuilder<bool>(
+            future:UserManagementHelper.login( UserManagement(
+        email: _emailController.text,
+        password:  _password1Controller.text,
+      ),) ,
+              builder:(context,snapshot){
+                        if(!snapshot.hasData) 
+                        {
+                        return SizedBox(
+       height: MediaQuery.of(context).size.height / 1.3,
+       child: Center(
+           child: CircularProgressIndicator(),
+            ),
+        );
+                        }
+                        else{
+                          allergyData();
+                          loginn(snapshot.hasData,user);
+                          return SmoothAlertDialog(
         body: Text(AppLocalizations.of(context)!.sign_up_page_action_ok),
         actions: <SmoothActionButton>[
           SmoothActionButton(
               text: AppLocalizations.of(context)!.okay,
               onPressed: () => Navigator.of(context).pop()),
         ],
-      ),
-    );
-    Navigator.of(context).pop<bool>(true);
-  }
+      );
+                        }
+               }
+           )
+);
 
-  void _saveAllergyData() async {
-       final Map<String,dynamic> Data = await DataBaseConfiguration.getData();
-   DataBaseConfiguration.addDataAllergy(Data['id'].toString());
+  }
+void loginn (bool log,UserManagement user) async {
+if(log){
+await UserManagementHelper.put(user);
+    Navigator.of(context).pop<bool>(true);
+}
+}
+
+  void allergyData() async {
+       final Map<String,dynamic> data = await DataBaseConfiguration.getData();
+   DataBaseConfiguration.addDataAllergy(data['id'].toString());
   }
 }
