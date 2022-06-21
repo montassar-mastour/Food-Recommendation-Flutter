@@ -1,5 +1,6 @@
 // ignore_for_file: always_specify_types, prefer_final_locals, unnecessary_new, noop_primitive_operations, prefer_interpolation_to_compose_strings, avoid_void_async, prefer_const_constructors, await_only_futures
                                                               
+import 'package:crypt/crypt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geocoding/geocoding.dart' as pre ;
@@ -318,14 +319,15 @@ PermissionStatus _permissionGranted;
   }
 
    _locationData = await location.getLocation();
-
+  
    List<pre.Placemark> placemarks = await pre.placemarkFromCoordinates(_locationData.latitude!.toDouble(),_locationData.longitude!.toDouble());
   final String local = placemarks.toList().first.country.toString()+',' + placemarks.toList().first.administrativeArea.toString() ;
+        String hashedPassword = Crypt.sha256(_password1Controller.text).toString();
     final UserManagement user = UserManagement(
       email: _emailController.text,
-      password: _password1Controller.text,
+      password: hashedPassword,
     );
-   DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_emailController.text,_password1Controller.text,local]);
+   DataBaseConfiguration.addData([_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,_displayWeightController.text,_emailController.text,hashedPassword,local]);
   
 
 
@@ -334,7 +336,7 @@ await showDialog<void>(
       builder: (BuildContext context) => FutureBuilder<bool>(
             future:UserManagementHelper.login( UserManagement(
         email: _emailController.text,
-        password:  _password1Controller.text,
+        password:  hashedPassword,
       ),) ,
               builder:(context,snapshot){
                         if(!snapshot.hasData) 
@@ -347,8 +349,9 @@ await showDialog<void>(
         );
                         }
                         else{
-                          allergyData();
+                          
                           loginn(snapshot.hasData,user);
+                          allergyData();
                           return SmoothAlertDialog(
         body: Text(AppLocalizations.of(context)!.sign_up_page_action_ok),
         actions: <SmoothActionButton>[

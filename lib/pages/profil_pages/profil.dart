@@ -74,7 +74,7 @@ class _ProfilPageState extends State<ProfilPage> {
       // children.add(_getServingField_allergy(Data['allergy'].toString(),allergy_controller));
       // children.add(_getServingField_another_allergy(Data['another_allergy'].toString(),another_alergy_controller));
       children.add(_getServingField_email(Data['email'].toString(),email_controller));
-      children.add(_getServingField_password(Data['password'].toString(),password_controller));
+      // children.add(_getServingField_password(Data['password'].toString(),password_controller));
       children.add(_addCancelSaveButtons (Data));
 
         return Padding(

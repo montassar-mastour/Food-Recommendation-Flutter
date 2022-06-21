@@ -1,3 +1,6 @@
+// ignore_for_file: always_specify_types
+
+import 'package:crypt/crypt.dart';
 import 'package:openfoodfacts/openfoodfacts.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/Data_Base_Api/user_management.dart';
@@ -24,7 +27,11 @@ class UserManagementHelper {
   static Future<bool> login(UserManagement user) async {
     final bool rightCredentials;
     try {
-      rightCredentials = await DataBaseConfiguration.login(user) ;
+    
+    final Map<String, dynamic> ex=   await DataBaseConfiguration.sec_login(user) ;
+     final  String pass= ex['password'].toString();
+       rightCredentials = await Future.value(Crypt(pass).match(user.password));
+       user.password=pass;
     } catch (e) {
       throw Exception(e);
     }

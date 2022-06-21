@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:crypt/crypt.dart';
 import 'package:http/http.dart' as http;
 import 'package:smooth_app/Data_Base_Api/user_management.dart';
 import 'package:smooth_app/database/dao_secured_string.dart';
@@ -31,6 +32,17 @@ static Future <bool>login(UserManagement user) async{
        'password': user.password
     });
  return response.body.toString()!='false';
+  
+  }
+  static Future <Map<String, dynamic>>sec_login(UserManagement user) async{
+   const String key='subdomain';
+    const String filename='sec_login.php';
+    const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename;
+    http.Response response = await http.post(Uri.parse(url),body: {
+       'email': user.email,
+    });
+  return json.decode(response.body) as Map<String, dynamic>;
+
   
   }
 
