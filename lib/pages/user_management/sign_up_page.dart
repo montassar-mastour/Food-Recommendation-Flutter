@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geocoding/geocoding.dart' as pre ;
 import 'package:location/location.dart';
-import 'package:openfoodfacts/model/AttributeGroup.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/Data_Base_Api/user_management.dart';
@@ -14,12 +13,10 @@ import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_text_form_field.dart';
-import 'package:smooth_app/helpers/ui_helpers.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
 import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
 import 'package:smooth_app/pages/user_preferences_food.dart';
-import 'package:smooth_app/themes/theme_provider.dart';
 
 /// Sign Up Page. Pop's true if the sign up was successful.
 class SignUpPage extends StatefulWidget {
@@ -374,7 +371,7 @@ await UserManagementHelper.put(user);
 }
 
   void allergyData() async {
-       final Map<String,dynamic> data = await DataBaseConfiguration.getData();
+       final Map<String, dynamic> data = await DataBaseConfiguration.getData();
    DataBaseConfiguration.addDataAllergy(data['id'].toString());
   }
 }

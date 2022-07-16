@@ -1,14 +1,11 @@
 // ignore_for_file: unused_local_variable, prefer_final_locals, non_constant_identifier_names, always_specify_types
 import 'package:flutter/material.dart';
 import 'package:smooth_app/Data_Base_Api/D_B_configuration.dart';
-import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
-import 'package:smooth_app/pages/onboarding/onboarding_flow_navigator.dart';
 import 'package:smooth_app/pages/page_manager.dart';
-import 'package:smooth_app/pages/user_preferences_page.dart';
 
 
 /// Actual nutrition page, with data already loaded.
@@ -61,10 +58,10 @@ class _ProfilPageState extends State<ProfilPage> {
        // ignore: always_put_control_body_on_new_line, avoid_print
         if( snapshot.hasData) 
         {
-            Map<String,dynamic>? Data = snapshot.data ;
+            Map<String, dynamic>? Data = snapshot.data ;
             final List<Widget> children = <Widget>[];
             // print(Data![0]);
-   
+      
       children.add(_getServingField_name(Data!['name'].toString(),name_controller));
       children.add(_getServingField_lastname(Data['last_name'].toString(),lastname_controller));
       children.add(_getServingField_age(Data['age'].toString(),age_controller));
@@ -87,7 +84,7 @@ class _ProfilPageState extends State<ProfilPage> {
         }else{
       return SizedBox(
        height: MediaQuery.of(context).size.height / 1.3,
-       child: Center(
+       child: const Center(
            child: CircularProgressIndicator(),
             ),
         );
@@ -363,7 +360,7 @@ class _ProfilPageState extends State<ProfilPage> {
     );
   }
 
- Widget _addCancelSaveButtons(Map<String,dynamic>? Data) => Row(
+ Widget _addCancelSaveButtons(Map<String, dynamic>? Data) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -384,9 +381,9 @@ class _ProfilPageState extends State<ProfilPage> {
         ],
       );
  
-   Future<void> _save(BuildContext context, Map<String,dynamic>? Data) async {
+   Future<void> _save(BuildContext context, Map<String, dynamic>? Data) async {
 
-if((name_controller.text !=Data!['name'].toString())||(lastname_controller.text !=Data['last_name'].toString())||(age_controller.text !=Data['age'].toString())||(length_controller.text !=Data['length'].toString())||(weight_controller.text !=Data['weight'].toString())||(f_r_controller.text !=Data['food_restriction'].toString())||(allergy_controller.text !=Data['allergy'].toString())||(another_alergy_controller.text !=Data['another_allergy'].toString())||(email_controller.text !=Data['email'].toString())||(password_controller.text !=Data['password'].toString())){
+if((name_controller.text !=Data!['name'].toString())||(lastname_controller.text !=Data['last_name'].toString())||(age_controller.text !=Data['age'].toString())||(length_controller.text !=Data['length'].toString())||(weight_controller.text !=Data['weight'].toString())||(email_controller.text !=Data['email'].toString())||(password_controller.text !=Data['password'].toString())){
      showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -404,10 +401,10 @@ if((name_controller.text !=Data!['name'].toString())||(lastname_controller.text 
                 Navigator.pop(context);
                 setState(() {
                  List<String> attributes  =[Data['id'].toString(),name_controller.text,lastname_controller.text,age_controller.text,length_controller.text,
-                  weight_controller.text,email_controller.text,password_controller.text];
+                  weight_controller.text,email_controller.text,Data['password'].toString()];
                   DataBaseConfiguration.updateData(attributes);
                 });
-                if((email_controller.text !=Data['email'].toString())||(password_controller.text !=Data['password'].toString())){
+                if(email_controller.text !=Data['email'].toString()){
                 UserManagementHelper.logout();
                 }
                 Navigator.push(

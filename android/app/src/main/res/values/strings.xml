@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources> 
+<string name="app_name">Hassassia</string>
+<string name="facebook_app_id">1034988227220462</string>
+<string name="fb_login_protocol_scheme">fb1034988227220462</string>
+ <string name="facebook_client_token">1e29c46f9e7589711a0ea124ea28294e</string>
+</resources>

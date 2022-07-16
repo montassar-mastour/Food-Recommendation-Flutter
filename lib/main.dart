@@ -76,8 +76,7 @@ class _SmoothAppState extends State<SmoothApp> {
 
   Future<void> _init() async {
     final Brightness brightness =
-        SchedulerBinding.instance?.window.platformBrightness ??
-            Brightness.light;
+        SchedulerBinding.instance!.window.platformBrightness;
     systemDarkmodeOn = brightness == Brightness.dark;
     _userPreferences = await UserPreferences.getUserPreferences();
     _localDatabase = await LocalDatabase.getLocalDatabase();

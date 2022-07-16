@@ -27,11 +27,15 @@ class UserManagementHelper {
   static Future<bool> login(UserManagement user) async {
     final bool rightCredentials;
     try {
+   final String pass =  await DataBaseConfiguration.sec_login(user) ;
+   print(pass);
+    if(pass=='false'){
+      rightCredentials =false ;
+      }else{
+      rightCredentials = await Future.value(Crypt(pass).match(user.password));
+      user.password=pass;
+      }
     
-    final Map<String, dynamic> ex=   await DataBaseConfiguration.sec_login(user) ;
-     final  String pass= ex['password'].toString();
-       rightCredentials = await Future.value(Crypt(pass).match(user.password));
-       user.password=pass;
     } catch (e) {
       throw Exception(e);
     }

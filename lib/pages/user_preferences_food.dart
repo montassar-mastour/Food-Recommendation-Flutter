@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_offline/flutter_offline.dart';
 import 'package:openfoodfacts/model/Attribute.dart';
 import 'package:openfoodfacts/model/AttributeGroup.dart';
-import 'package:provider/provider.dart';
 import 'package:smooth_app/Data_Base_Api/d_b_configuration.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
@@ -145,7 +144,7 @@ Widget _build(BuildContext context,List<AttributeGroup> groups) {
   void update_server(List<AttributeGroup> groups) async{
     final AttributeGroup group = (groups.where((AttributeGroup g) => g.id == 'allergens')).first;
               if(DataBaseConfiguration.user != null){
-                final Map<String,dynamic> Data = await DataBaseConfiguration.getData();
+                final Map<String, dynamic> Data = await DataBaseConfiguration.getData();
                  final  Map<String,String> att_map={'user_id': Data['id'].toString()} ;
                   Attribute attributt;
                   for(attributt in group.attributes!){

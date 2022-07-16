@@ -42,7 +42,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.openfoodfacts.app"
+        applicationId "com.Hassassia.app"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
@@ -56,6 +56,12 @@ android {
             storePassword System.getenv('SIGN_STORE_PASSWORD')
             keyAlias System.getenv('SIGN_KEY_ALIAS')
             keyPassword System.getenv('SIGN_KEY_PASSWORD')
+        }
+        debug {
+          keyAlias 'upload'
+          keyPassword '.montassar0.'
+          storeFile file('my_key.jks')
+          storePassword '.montassar0.'
         }
     }
 

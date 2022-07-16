@@ -6,6 +6,8 @@ import 'package:openfoodfacts/model/AttributeGroup.dart';
 import 'package:openfoodfacts/personalized_search/preference_importance.dart';
 import 'package:smooth_app/data_models/product_preferences.dart';
 import 'package:smooth_app/data_models/user_preferences.dart';
+import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
+import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog2.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
 import 'package:smooth_app/language/language.dart';
 
@@ -94,42 +96,42 @@ void _confirm_who(BuildContext context,String importanceId) {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(Language.who_have_this_allergy!),
-          actions: <Widget>[
-            TextButton(
-              child: Text(Language.me!),
+        return  SmoothAlertDialog2(
+        body: Text(Language.who_have_this_allergy!),
+        actions: <SmoothActionButton>[
+          SmoothActionButton(
+              text: Language.me!,
               onPressed: () {
-               final String get =  userPreferences.getWHO(how_id);
+                     final String get =  userPreferences.getWHO(how_id);
                 if(get != HowVal[0]) userPreferences.setWHO(how_id,HowVal[0]);
                 // update_server(group,importanceId);
                Navigator.pop(context);
               },
-            ),
-            TextButton(
-              child: Text(Language.Member_of_my_family!),
+                                                  ) ,
+           SmoothActionButton(
+              text: Language.Member_of_my_family!,
               onPressed: () {
                 final String get =  userPreferences.getWHO(how_id);
                 if(get != HowVal[1]) userPreferences.setWHO(how_id,HowVal[1]);
                 Navigator.pop(context);
               },
-            ),
-            TextButton(
-              child: Text(Language.both!),
+                 
+                                                  ),
+           SmoothActionButton(
+              text: Language.both!,
               onPressed: () {
-                final String get =  userPreferences.getWHO(how_id);
+                 final String get =  userPreferences.getWHO(how_id);
                 if(get != HowVal[2]) userPreferences.setWHO(how_id,HowVal[2]);
                 Navigator.pop(context);
               },
-            ),
-            TextButton(
-              child: Text(Language.close!),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
-        );
+                                                  ) ,
+        //  SmoothActionButton(
+        //       text: Language.close!,
+        //       onPressed: () => Navigator.pop(context),
+        //                                           ) , 
+                                                  ],
+      );
+        
       },
     );
 
@@ -151,3 +153,5 @@ void _confirm_who(BuildContext context,String importanceId) {
         }
          
    }
+
+ 

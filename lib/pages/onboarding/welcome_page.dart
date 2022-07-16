@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:smooth_app/helpers/ui_helpers.dart';
 import 'package:smooth_app/language/language.dart';
-import 'package:smooth_app/pages/onboarding/country_selector.dart';
 import 'package:smooth_app/pages/onboarding/next_button.dart';
 import 'package:smooth_app/pages/onboarding/onboarding_flow_navigator.dart';
 
@@ -32,13 +30,13 @@ Language.build(context);
               const Spacer(flex: 3),
               Flexible(
                 flex: 6,
-                child: Text('                '+ Language.welcome!, style: headlineStyle,textAlign: TextAlign.center),
+                child: Text('                ${Language.welcome!}', style: headlineStyle,textAlign: TextAlign.center),
               ),
               Flexible(
                 flex: 3,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
+                  children: const <Widget>[
                     // Padding(
                     //   padding: const EdgeInsets.only(left: SMALL_SPACE),
                     //   child: Text(

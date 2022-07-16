@@ -5,7 +5,6 @@ import 'package:smooth_app/data_models/continuous_scan_model.dart';
 import 'package:smooth_app/helpers/ui_helpers.dart';
 import 'package:smooth_app/pages/personalized_ranking_page.dart';
 import 'package:smooth_app/pages/product/common/product_query_page_helper.dart';
-import 'package:smooth_app/widgets/ranking_floating_action_button.dart';
 
 bool areButtonsRendered(ContinuousScanModel model) =>
     model.hasMoreThanOneProduct;

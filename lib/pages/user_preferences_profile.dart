@@ -15,6 +15,7 @@ import 'package:smooth_app/pages/abstract_user_preferences.dart';
 import 'package:smooth_app/pages/profil_pages/profil.dart';
 import 'package:smooth_app/pages/user_management/login_page.dart';
 
+
 /// Collapsed/expanded display of profile for the preferences page.
 class UserPreferencesProfile extends AbstractUserPreferences {
   UserPreferencesProfile({
@@ -130,7 +131,7 @@ return Center(
                 MaterialPageRoute<dynamic>(
                   builder: (BuildContext context) =>  LoginPage(userPreferences: userPreferences,productPreferences:productPreferences),
                 ),
-              );
+            );              
               setState(() {});
             },
             child: Text(
@@ -178,11 +179,11 @@ return Center(
               onPressed: () async {
                 UserManagementHelper.logout();
                 await context.read<ProductPreferences>().resetImportances();
-               List<AttributeGroup> lis= productPreferences.attributeGroups!;
-               for(AttributeGroup Attgrp in lis){
-                 List<Attribute> lis2 = Attgrp.attributes!;
-                 for(Attribute att in lis2){
-                   String ch='who_'+ att.id.toString();
+               final List<AttributeGroup> lis= productPreferences.attributeGroups!;
+               for(final AttributeGroup Attgrp in lis){
+                 final List<Attribute> lis2 = Attgrp.attributes!;
+                 for(final Attribute att in lis2){
+                   final String ch='who_${att.id}';
                 userPreferences.setWHO(ch,'');
                  }
                }
@@ -202,4 +203,4 @@ return Center(
       },
     );
   }
-}
+} 
