@@ -35,8 +35,8 @@ Future<void> main() async {
             'sentry.dart.smoothie/${packageInfo.version}';
       },
       appRunner: () => runApp(const SmoothApp()),
+      
     );
-
     /* TODO: put back when we have clearer ideas about analytics
     await MatomoTracker().initialize(
       siteId: 2,
@@ -93,7 +93,6 @@ class _SmoothAppState extends State<SmoothApp> {
     ProductQuery.setCountry(_userPreferences.userCountryCode);
     _themeProvider = ThemeProvider(_userPreferences);
     ProductQuery.setQueryType(_userPreferences);
-
     UserManagementHelper.mountCredentials();
     cameras = await availableCameras();
     await ProductQuery.setUuid(_localDatabase);
@@ -134,6 +133,7 @@ class _SmoothAppState extends State<SmoothApp> {
     final Widget appWidget = OnboardingFlowNavigator(_userPreferences)
         .getPageWidget(context, _userPreferences.lastVisitedOnboardingPage);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       navigatorObservers: <NavigatorObserver>[
