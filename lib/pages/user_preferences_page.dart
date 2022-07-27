@@ -11,6 +11,7 @@ import 'package:smooth_app/data_models/user_preferences.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
+import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/abstract_user_preferences.dart';
 import 'package:smooth_app/pages/sign_pages/forgot_password_page.dart';
 import 'package:smooth_app/pages/sign_pages/forgot_password_verification_page.dart';
@@ -44,43 +45,43 @@ class _UserPreferencesPageState extends State<UserPreferencesPage> {
     final ThemeData themeData = Theme.of(context);
     final ProductPreferences productPreferences =
         context.watch<ProductPreferences>();
-      
+        Language.build(context);
 const double  _drawerIconSize = 24;
   const double _drawerFontSize = 17;
   final List<ListTile> myList =[    
      ListTile(
                 leading: Icon(Icons.screen_lock_landscape_rounded, size: _drawerIconSize, color: Color.fromARGB(255, 77, 163, 233)),
-                title: Text('Profil Page', style: TextStyle(fontSize: 17, color: Color.fromARGB(255, 77, 163, 233)),),
+                title: Text(  Language.profil_page!, style: TextStyle(fontSize: 17, color: Color.fromARGB(255, 77, 163, 233)),),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => ProfilePage()));
                 },
               ),
                     
-              ListTile(
-                leading: Icon(Icons.password_rounded, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233)),
-                title: Text('Forgot Password Page',style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
-                onTap: () {
-                  Navigator.push( context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const ForgotPasswordPage()),);
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.password_rounded, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233)),
+              //   title: Text(Language.forgot_password_page!,style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
+              //   onTap: () {
+              //     Navigator.push( context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const ForgotPasswordPage()),);
+              //   },
+              // ),
               
-              ListTile(
-                leading: Icon(Icons.verified_user_sharp, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233)),
-                title: Text('Verification Page',style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
-                onTap: () {
-                  Navigator.push( context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const ForgotPasswordVerificationPage()), );
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.verified_user_sharp, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233)),
+              //   title: Text(Language.verification_page!,style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
+              //   onTap: () {
+              //     Navigator.push( context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const ForgotPasswordVerificationPage()), );
+              //   },
+              // ),
               
               ListTile(
                 leading: Icon(Icons.logout_rounded, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233)),
-                title: Text('Logout',style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
+                title: Text(Language.logout!,style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
                 onTap: () => _confirmLogout(context,productPreferences,userPreferences),
               ),];
               final List<ListTile> myList0 =[    
               ListTile(
                 leading: Icon(Icons.login_rounded,size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233)),
-                title: Text('Login Page', style: TextStyle(fontSize: _drawerFontSize, color: Color.fromARGB(255, 77, 163, 233)),
+                title: Text(Language.login_page!, style: TextStyle(fontSize: _drawerFontSize, color: Color.fromARGB(255, 77, 163, 233)),
                 ),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => LoginPagee(userPreferences:userPreferences,productPreferences:productPreferences)),);
@@ -89,27 +90,28 @@ const double  _drawerIconSize = 24;
       
               ListTile(
                 leading: Icon(Icons.person_add_alt_1, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233)),
-                title: Text('Registration Page',style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
+                title: Text(Language.registration_page!,style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => RegistrationPage()),);
                 },
               ),
               
-              ListTile(
-                leading: Icon(Icons.password_rounded, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233),),
-                title: Text('Forgot Password Page',style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
-                onTap: () {
-                  Navigator.push( context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const ForgotPasswordPage()),);
-                },
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.password_rounded, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233),),
+              //   title: Text(Language.forgot_password_page!,style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
+              //   onTap: () {
+              //     Navigator.push( context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const ForgotPasswordPage()),);
+              //   },
+              // ),
               
-              ListTile(
-                leading: Icon(Icons.verified_user_sharp, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233),),
-                title: Text('Verification Page',style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
-                onTap: () {
-                  Navigator.push( context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const ForgotPasswordVerificationPage()), );
-                },
-              ),];
+              // ListTile(
+              //   leading: Icon(Icons.verified_user_sharp, size: _drawerIconSize,color: Color.fromARGB(255, 77, 163, 233),),
+              //   title: Text(Language.verification_page!,style: TextStyle(fontSize: _drawerFontSize,color: Color.fromARGB(255, 77, 163, 233)),),
+              //   onTap: () {
+              //     Navigator.push( context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const ForgotPasswordVerificationPage()), );
+              //   },
+              // ),
+              ];
 
     Widget  Drawer_name() {
      return DrawerHeader(
@@ -124,7 +126,7 @@ const double  _drawerIconSize = 24;
                 ),
                 child: Container(
                   alignment: Alignment.bottomLeft,
-                  child: const Text('Your Profil',
+                  child: Text(Language.profil_page!,
                     style: TextStyle(fontSize: 25,color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),

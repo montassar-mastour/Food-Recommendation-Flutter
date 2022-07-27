@@ -10,6 +10,8 @@ import 'package:smooth_app/Data_Base_Api/user_management.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
+import 'package:smooth_app/language/language.dart';
+import 'package:smooth_app/pages/page_manager.dart';
 import 'package:smooth_app/pages/user_preferences_page.dart';
 import 'header_widget.dart';
 import 'theme_helper.dart';
@@ -36,10 +38,11 @@ class _RegistrationPage2State extends State<RegistrationPage2> {
 
   @override
   Widget build(BuildContext context) {
+    Language.build(context);
         final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign Up Page 2/2',
+        title:  Text('${Language.registration_page} 2/2',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevation: 0.5,
@@ -104,14 +107,14 @@ class _RegistrationPage2State extends State<RegistrationPage2> {
                                              const SizedBox(height: 15.0),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration('E-mail address', 'Enter your email'),
+                            decoration: ThemeHelper().textInputDecoration(Language.email!, Language.Enter_your_email!),
                             keyboardType: TextInputType.emailAddress,
                             controller: _emailController,
                             validator: (String? val) {
                                if(val!.isEmpty){
-                                return 'Please Enter email address';
+                                return Language.Please_enter_your_Email;
                               }else if(!RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,253}[a-zA-Z0-9])?)*$").hasMatch(val)){
-                                return 'Enter a valid email address';
+                                return Language.Enter_a_valid_email_address;
                               
                               }else {
                                 return null;
@@ -126,10 +129,10 @@ class _RegistrationPage2State extends State<RegistrationPage2> {
                             obscureText: true,
                             controller: _password1Controller,
                             decoration: ThemeHelper().textInputDecoration(
-                                'Password*', 'Enter your password'),
+                                Language.Password!, Language.Enter_your_password!),
                             validator: (String? val) {
                               if (val!.isEmpty) {
-                                return 'Please enter your password';
+                                return Language.Please_enter_your_password;
                               }
                               return null;
                             },
@@ -141,13 +144,13 @@ class _RegistrationPage2State extends State<RegistrationPage2> {
                           child: TextFormField(
                             obscureText: true,
                             decoration: ThemeHelper().textInputDecoration(
-                                'Confirm Password* ', 'Confirm your password'),
+                                Language.ConfirmPassword!, Language.Confirm_your_password!),
                                 controller: _password2Controller,
                             validator: (String? val) {
                               if (val!.isEmpty) {
-                                return 'Please enter your password';
+                                return Language.Please_enter_your_password;
                               }else if (val != _password1Controller.text) {
-                  return "Passwords don't match";
+                  return Language.Passwords_dont_match;
                 }
                               return null;
                             },
@@ -163,7 +166,7 @@ class _RegistrationPage2State extends State<RegistrationPage2> {
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(40, 10, 40, 10),
                               child: Text(
-                                'Register'.toUpperCase(),
+                                Language.Register!.toUpperCase(),
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -180,7 +183,7 @@ class _RegistrationPage2State extends State<RegistrationPage2> {
                         ),
                          
                         const SizedBox(height: 30.0),
-                        const Text('Or sign up using social media',  style: TextStyle(color: Colors.grey),),
+                         Text(Language.Or_sign_up_using_social_media!,  style: TextStyle(color: Colors.grey),),
                         const SizedBox(height: 25.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -247,6 +250,22 @@ class _RegistrationPage2State extends State<RegistrationPage2> {
     //   password: hashedPassword,
     // );
    final List<String> list=widget._list;
+     bool test = await DataBaseConfiguration.email_test(mail);
+     if(test){
+      showDialog<void>(
+        context: context,
+       builder: (BuildContext context) {
+      return  SmoothAlertDialog(
+        body: const Text('Error, this email already used'),
+        actions: <SmoothActionButton>[
+          SmoothActionButton(
+              text: AppLocalizations.of(context)!.okay,
+              onPressed: () =>  Navigator.pushReplacement(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => PageManager()))),
+        ],
+      );}
+      );
+     }
+     else{
    DataBaseConfiguration.addData([list[0],list[1],list[2],list[3],list[4],mail,hashedPassword,list[5]]);
 final UserManagement user = UserManagement(
         email: mail,
@@ -278,16 +297,16 @@ showDialog<void>(
         actions: <SmoothActionButton>[
           SmoothActionButton(
               text: AppLocalizations.of(context)!.okay,
-              onPressed: () =>  Navigator.pushReplacement(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const UserPreferencesPage()))),
+              onPressed: () =>  Navigator.pushReplacement(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => PageManager()))),
         ],
       );}
       else{
         return SmoothAlertDialog(
-        body: const Text('Error, please repeat your process'),
+        body:  Text(Language.Error_please_repeat_your_process!),
         actions: <SmoothActionButton>[
           SmoothActionButton(
               text: AppLocalizations.of(context)!.okay,
-              onPressed: () =>  Navigator.pushReplacement(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => const UserPreferencesPage()))),
+              onPressed: () =>  Navigator.pushReplacement(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => PageManager()))),
         ],
       );
 
@@ -296,7 +315,7 @@ showDialog<void>(
                }
            )
 );
-
+  }
   }
 void loginn (bool log,UserManagement user) {
 if(log){

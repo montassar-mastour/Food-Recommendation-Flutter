@@ -49,7 +49,7 @@ class SmoothAlertDialog2 extends StatelessWidget {
                 height: 150,
                 width: MediaQuery.of(context).size.width,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: actions!,
                 ),

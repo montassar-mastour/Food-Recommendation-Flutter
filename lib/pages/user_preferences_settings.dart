@@ -91,134 +91,134 @@ class UserPreferencesSettings extends AbstractUserPreferences {
             ),
           ),
         ),
-        SmoothListTile(
-          text: appLocalizations.contribute,
-          onPressed: () => showCupertinoModalBottomSheet<Widget>(
-            expand: false,
-            context: context,
-            backgroundColor: Colors.transparent,
-            bounce: true,
-            builder: (BuildContext context) => UserContributionView(),
-          ),
-        ),
-        SmoothListTile(
-          text: appLocalizations.support,
-          onPressed: () {
-            showDialog<void>(
-              context: context,
-              builder: (BuildContext context) => SmoothAlertDialog(
-                close: false,
-                body: Column(
-                  children: <Widget>[
-                    SmoothMainButton(
-                      important: false,
-                      text: appLocalizations.support_join_slack,
-                      onPressed: () {
-                        LaunchUrlHelper.launchURL(
-                          'https://slack.openfoodfacts.org/',
-                          false,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    SmoothMainButton(
-                      important: false,
-                      text: appLocalizations.support_via_email,
-                      onPressed: () async {
-                        final PackageInfo packageInfo =
-                            await PackageInfo.fromPlatform();
-                        LaunchUrlHelper.launchURL(
-                          // TODO(M123): Change subject name when we have a different app name
-                          'mailto:contact@openfoodfacts.org?subject=Smoothie%20help&body=Version:${packageInfo.version}',
-                          false,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
-        SmoothListTile(
-          text: appLocalizations.about_this_app,
-          onPressed: () async {
-            final PackageInfo packageInfo = await PackageInfo.fromPlatform();
-            showDialog<void>(
-              context: context,
-              builder: (BuildContext context) => SmoothAlertDialog(
-                close: false,
-                body: Column(
-                  children: <Widget>[
-                    ListTile(
-                      leading:
-                          Image.asset('assets/app/smoothie-icon.1200x1200.png'),
-                      title: Text(
-                        packageInfo.appName,
-                        style: themeData.textTheme.headline1,
-                      ),
-                      subtitle: Text(
-                        '${packageInfo.version}+${packageInfo.buildNumber}',
-                        style: themeData.textTheme.subtitle2,
-                      ),
-                    ),
-                    Divider(color: themeData.colorScheme.onSurface),
-                    const SizedBox(height: 20),
-                    Text(appLocalizations.whatIsOff),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        TextButton(
-                          onPressed: () => LaunchUrlHelper.launchURL(
-                              'https://openfoodfacts.org/who-we-are', true),
-                          child: Text(
-                            appLocalizations.learnMore,
-                            style: const TextStyle(
-                              color: Colors.blue,
-                            ),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () => LaunchUrlHelper.launchURL(
-                              'https://openfoodfacts.org/terms-of-use', true),
-                          child: Text(
-                            appLocalizations.termsOfUse,
-                            style: const TextStyle(
-                              color: Colors.blue,
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-                actions: <SmoothActionButton>[
-                  SmoothActionButton(
-                    onPressed: () async {
-                      showLicensePage(
-                        context: context,
-                        applicationName: packageInfo.appName,
-                        applicationVersion: packageInfo.version,
-                        applicationIcon: Image.asset(
-                          'assets/app/smoothie-icon.1200x1200.png',
-                          height: MediaQuery.of(context).size.height * 0.1,
-                        ),
-                      );
-                    },
-                    text: appLocalizations.licenses,
-                    minWidth: 100,
-                  ),
-                  SmoothActionButton(
-                    onPressed: () =>
-                        Navigator.of(context, rootNavigator: true).pop(),
-                    text: appLocalizations.okay,
-                    minWidth: 100,
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
+        // SmoothListTile(
+        //   text: appLocalizations.contribute,
+        //   onPressed: () => showCupertinoModalBottomSheet<Widget>(
+        //     expand: false,
+        //     context: context,
+        //     backgroundColor: Colors.transparent,
+        //     bounce: true,
+        //     builder: (BuildContext context) => UserContributionView(),
+        //   ),
+        // ),
+        // SmoothListTile(
+        //   text: appLocalizations.support,
+        //   onPressed: () {
+        //     showDialog<void>(
+        //       context: context,
+        //       builder: (BuildContext context) => SmoothAlertDialog(
+        //         close: false,
+        //         body: Column(
+        //           children: <Widget>[
+        //             SmoothMainButton(
+        //               important: false,
+        //               text: appLocalizations.support_join_slack,
+        //               onPressed: () {
+        //                 LaunchUrlHelper.launchURL(
+        //                   'https://slack.openfoodfacts.org/',
+        //                   false,
+        //                 );
+        //               },
+        //             ),
+        //             const SizedBox(height: 20),
+        //             SmoothMainButton(
+        //               important: false,
+        //               text: appLocalizations.support_via_email,
+        //               onPressed: () async {
+        //                 final PackageInfo packageInfo =
+        //                     await PackageInfo.fromPlatform();
+        //                 LaunchUrlHelper.launchURL(
+        //                   // TODO(M123): Change subject name when we have a different app name
+        //                   'mailto:contact@openfoodfacts.org?subject=Smoothie%20help&body=Version:${packageInfo.version}',
+        //                   false,
+        //                 );
+        //               },
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     );
+        //   },
+        // ),
+        // SmoothListTile(
+        //   text: appLocalizations.about_this_app,
+        //   onPressed: () async {
+        //     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        //     showDialog<void>(
+        //       context: context,
+        //       builder: (BuildContext context) => SmoothAlertDialog(
+        //         close: false,
+        //         body: Column(
+        //           children: <Widget>[
+        //             ListTile(
+        //               leading:
+        //                   Image.asset('assets/app/smoothie-icon.1200x1200.png'),
+        //               title: Text(
+        //                 packageInfo.appName,
+        //                 style: themeData.textTheme.headline1,
+        //               ),
+        //               subtitle: Text(
+        //                 '${packageInfo.version}+${packageInfo.buildNumber}',
+        //                 style: themeData.textTheme.subtitle2,
+        //               ),
+        //             ),
+        //             Divider(color: themeData.colorScheme.onSurface),
+        //             const SizedBox(height: 20),
+        //             Text(appLocalizations.whatIsOff),
+        //             Row(
+        //               mainAxisAlignment: MainAxisAlignment.center,
+        //               children: <Widget>[
+        //                 TextButton(
+        //                   onPressed: () => LaunchUrlHelper.launchURL(
+        //                       'https://openfoodfacts.org/who-we-are', true),
+        //                   child: Text(
+        //                     appLocalizations.learnMore,
+        //                     style: const TextStyle(
+        //                       color: Colors.blue,
+        //                     ),
+        //                   ),
+        //                 ),
+        //                 TextButton(
+        //                   onPressed: () => LaunchUrlHelper.launchURL(
+        //                       'https://openfoodfacts.org/terms-of-use', true),
+        //                   child: Text(
+        //                     appLocalizations.termsOfUse,
+        //                     style: const TextStyle(
+        //                       color: Colors.blue,
+        //                     ),
+        //                   ),
+        //                 )
+        //               ],
+        //             )
+        //           ],
+        //         ),
+        //         actions: <SmoothActionButton>[
+        //           SmoothActionButton(
+        //             onPressed: () async {
+        //               showLicensePage(
+        //                 context: context,
+        //                 applicationName: packageInfo.appName,
+        //                 applicationVersion: packageInfo.version,
+        //                 applicationIcon: Image.asset(
+        //                   'assets/app/smoothie-icon.1200x1200.png',
+        //                   height: MediaQuery.of(context).size.height * 0.1,
+        //                 ),
+        //               );
+        //             },
+        //             text: appLocalizations.licenses,
+        //             minWidth: 100,
+        //           ),
+        //           SmoothActionButton(
+        //             onPressed: () =>
+        //                 Navigator.of(context, rootNavigator: true).pop(),
+        //             text: appLocalizations.okay,
+        //             minWidth: 100,
+        //           ),
+        //         ],
+        //       ),
+        //     );
+        //   },
+        // ),
       ];
 
   Widget _getColorButton(

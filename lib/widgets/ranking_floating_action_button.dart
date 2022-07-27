@@ -24,19 +24,7 @@ class RankingFloatingActionButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(width: MediaQuery.of(context).size.width * 0.09),
-            FloatingActionButton.extended(
-              elevation: 12.0,
-              icon: Icon(
-                rankingIconData,
-                color: color,
-              ),
-              label: Text(
-                AppLocalizations.of(context)!.myPersonalizedRanking,
-                style: TextStyle(color: color),
-              ),
-              backgroundColor: Colors.white,
-              onPressed: onPressed,
-            ),
+           
           ],
         ),
       );

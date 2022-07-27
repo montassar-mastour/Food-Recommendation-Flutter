@@ -107,7 +107,7 @@ Widget _build(BuildContext context,List<AttributeGroup> groups) {
        result.addAll(abstractUserPreference.getContent());
 
          }else{      
-           if(group.id!=AttributeGroup.ATTRIBUTE_GROUP_ENVIRONMENT && group.id!=AttributeGroup.ATTRIBUTE_GROUP_PROCESSING && group.id!=AttributeGroup.ATTRIBUTE_GROUP_LABELS){
+           if(group.id!=AttributeGroup.ATTRIBUTE_GROUP_ENVIRONMENT && group.id!=AttributeGroup.ATTRIBUTE_GROUP_INGREDIENT_ANALYSIS && group.id!=AttributeGroup.ATTRIBUTE_GROUP_NUTRITIONAL_QUALITY && group.id!=AttributeGroup.ATTRIBUTE_GROUP_PROCESSING && group.id!=AttributeGroup.ATTRIBUTE_GROUP_LABELS){
         abstractUserPreferences   =
         UserPreferencesAttributeGroup(
         productPreferences: productPreferences,

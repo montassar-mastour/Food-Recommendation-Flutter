@@ -3,6 +3,7 @@ import 'package:smooth_app/Data_Base_Api/D_B_configuration.dart';
 import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
+import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/page_manager.dart';
 import 'package:smooth_app/pages/sign_pages/profile_page.dart';
 import 'package:smooth_app/pages/user_preferences_page.dart';
@@ -42,11 +43,11 @@ class _ProfilPage2State extends State<ProfilPage2>{
 
   @override
   Widget build(BuildContext context) {
-    
+    Language.build(context);
     _displayNameController.addListener(() { });
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil Page',
+        title: Text(Language.profil_page!,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevation: 0.5,
@@ -101,7 +102,7 @@ class _ProfilPage2State extends State<ProfilPage2>{
                         const SizedBox(height: 130,),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration('First Name', 'Enter your first name'),
+                            decoration: ThemeHelper().textInputDecoration(Language.first_name!, Language.Enter_your_first_name!),
                             controller: _displayNameController,
                           ),
                           decoration: ThemeHelper().inputBoxDecorationShaddow(),
@@ -109,11 +110,11 @@ class _ProfilPage2State extends State<ProfilPage2>{
                         const SizedBox(height: 30,),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration('Last Name', 'Enter your last name'),
+                            decoration: ThemeHelper().textInputDecoration(Language.last_name!,Language.Enter_your_last_name!),
                             controller: _displayLastNameController,
                          validator: (String? val) {
                                if(val!.isEmpty){
-                                return 'Please Enter Your Last Name';
+                                return Language.Please_Enter_Your_Last_Name;
                               }else{
                               return null;
                             }}, ),
@@ -122,15 +123,15 @@ class _ProfilPage2State extends State<ProfilPage2>{
                         const SizedBox(height: 20.0),
                         Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration('Age','Enter your Age'),
+                            decoration: ThemeHelper().textInputDecoration(Language.age!,Language.Enter_your_Age!),
                             controller: _displayAgeController,
                             keyboardType: TextInputType.phone,
                             validator: (String? val) {
                                if(val!.isEmpty){
-                                return 'Please Enter Age';
+                                return Language.Please_Enter_Age;
                               }else
                               if(!RegExp(r'^(\d+)*$').hasMatch(val)){
-                                return 'Enter a valid Age';
+                                return Language.Enter_a_valid_Age;
                               }
                               return null;
                             },
@@ -140,12 +141,12 @@ class _ProfilPage2State extends State<ProfilPage2>{
                         const SizedBox(height: 20.0),
                                   Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration( 'Length', 'Enter your Length'),
+                            decoration: ThemeHelper().textInputDecoration(Language.length!,Language.Enter_your_Length!),
                             controller: _displayLengthController,
                             keyboardType: TextInputType.phone,
                             validator: (String? val) {
                                if(val!.isEmpty){
-                                return 'Please Enter Length';
+                                return Language.Please_Enter_Length;
                               }else{
                               return null;}
                             },
@@ -155,12 +156,12 @@ class _ProfilPage2State extends State<ProfilPage2>{
                         const SizedBox(height: 20.0),
                                   Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration( 'Weight','Enter your Weight'),
+                            decoration: ThemeHelper().textInputDecoration( Language.weight!,Language.Enter_your_Weight!),
                             controller: _displayWeightController,
                             keyboardType: TextInputType.phone,
                             validator: (String? val) {
                                if(val!.isEmpty){
-                                return 'Please Enter Weight';
+                                return Language.Please_Enter_Weight;
                               }else{
                               return null;}
                             },
@@ -171,11 +172,11 @@ class _ProfilPage2State extends State<ProfilPage2>{
                         const SizedBox(height: 20.0),
                                   Container(
                           child: TextFormField(
-                            decoration: ThemeHelper().textInputDecoration( 'Mail', 'Enter your mail'),
+                            decoration: ThemeHelper().textInputDecoration(Language.email!, Language.Enter_your_email!),
                             controller: _displaymailController,
                             validator: (String? val) {
                                if(val!.isEmpty){
-                                return 'Please Enter Mail';
+                                return Language.Please_enter_your_Email;
                               }else{
                               return null;
                               }
@@ -194,7 +195,7 @@ class _ProfilPage2State extends State<ProfilPage2>{
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(20, 10, 20, 8),
                               child: Text(
-                                'Cancel'.toUpperCase(),
+                                Language.cancel!.toUpperCase(),
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -216,7 +217,7 @@ class _ProfilPage2State extends State<ProfilPage2>{
                             child: Padding(
                               padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                               child: Text(
-                                ' Save '.toUpperCase(),
+                                Language.save!.toUpperCase(),
                                 style: const TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold,
@@ -264,20 +265,20 @@ if((_displayNameController.text !=Data!['name'].toString())||(_displayLastNameCo
       builder: (BuildContext context) {
         return SmoothAlertDialog(
           close: false,
-          title: 'Modify',
+          title: Language.Modify!,
           // ignore: prefer_const_constructors
           body: Text(
-            'Are you sure ?',
+            Language.Are_you_sure!,
           ),
           actions: <SmoothActionButton>[
             SmoothActionButton(
-              text: 'No',
+              text: Language.No!,
               onPressed: () {
                 Navigator.pop(context);
               },
             ),
             SmoothActionButton(
-              text: 'Yes',
+              text: Language.Yes!,
               onPressed: () {
                 final List<String> attributes  = [Data['id'].toString(),_displayNameController.text,_displayLastNameController.text,_displayAgeController.text,_displayLengthController.text,
                   _displayWeightController.text,_displaymailController.text,Data['password'].toString()];

@@ -17,6 +17,8 @@ import 'package:smooth_app/generic_lib/buttons/smooth_action_button.dart';
 import 'package:smooth_app/generic_lib/dialogs/smooth_alert_dialog.dart';
 import 'package:smooth_app/generic_lib/widgets/smooth_card.dart';
 import 'package:smooth_app/helpers/user_management_helper.dart';
+import 'package:smooth_app/language/language.dart';
+import 'package:smooth_app/pages/page_manager.dart';
 import 'package:smooth_app/pages/sign_pages/registration_page1.dart';
 import 'package:smooth_app/pages/user_preferences_page.dart';
 
@@ -55,7 +57,7 @@ class _LoginPageState extends State<LoginPagee>{
     );
     if (login) {
      update_local(context);
-      Navigator.pushReplacement(context, MaterialPageRoute<Widget>(builder: (context) => UserPreferencesPage()));  
+      Navigator.push(context, MaterialPageRoute<Widget>(builder: (context) => PageManager()));  
     setState(() {});
                 
     } else {
@@ -74,10 +76,10 @@ class _LoginPageState extends State<LoginPagee>{
 
   @override
   Widget build(BuildContext context) {
-
+Language.build(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign In Page",
+        title: Text(Language.sign_in_page!, 
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevation: 0.5,
@@ -113,7 +115,7 @@ class _LoginPageState extends State<LoginPagee>{
                       style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      'Signin into your account',
+                      Language.signin_into_your_account!,
                       style: TextStyle(color: Colors.grey),
                     ),
                     SizedBox(height: 5.0),
@@ -125,7 +127,7 @@ class _LoginPageState extends State<LoginPagee>{
                    SmoothCard(
                       padding: const EdgeInsets.all(10.0),
                       color: Colors.red,
-                      child: Text('Incorrect username or password'),
+                      child: Text(Language.incorrect_username_or_password!),
                     ),
                     
                   ],
@@ -133,14 +135,14 @@ class _LoginPageState extends State<LoginPagee>{
                              Container(
                           child: TextFormField(
                             obscureText: false,
-                            decoration: ThemeHelper().textInputDecoration('User Name', 'Enter your user name'
+                            decoration: ThemeHelper().textInputDecoration(Language.User_Name!, Language.Enter_your_user_name!
                                 ),
                                 controller: userIdController ,
                             validator: ( val) {
                               if (val!.isEmpty) {
-                                return "Please enter your Email";
+                                return Language.Please_enter_your_username;
                               }else if(!UserManagementHelper.isEmailValid(val)) {
-                                return "Invalid Email";
+                                return Language.Invalid_Email;
                               }
                               return null;
                             },
@@ -151,11 +153,11 @@ class _LoginPageState extends State<LoginPagee>{
                             Container(
                           child: TextFormField(
                             obscureText: true,
-                              decoration: ThemeHelper().textInputDecoration('Password', 'Enter your password'),
+                              decoration: ThemeHelper().textInputDecoration(Language.Password!, Language.Enter_your_password!),
                                 controller:  passwordController,
                             validator: (val) {
                               if (val!.isEmpty) {
-                                return "Please enter your password";
+                                return Language.Please_enter_your_password;
                               }
                               return null;
                             },
@@ -170,7 +172,7 @@ class _LoginPageState extends State<LoginPagee>{
                                 onTap: () {
                                   Navigator.push( context, MaterialPageRoute<Widget>( builder: (context) => ForgotPasswordPage()), );
                                 },
-                                child: Text( "Forgot your password?", style: TextStyle( color: Colors.grey, ),
+                                child: Text( Language.Forgot_your_password!, style: TextStyle( color: Colors.grey, ),
                                 ),
                               ),
                             ),
@@ -193,7 +195,7 @@ class _LoginPageState extends State<LoginPagee>{
                             ),
                             
                                                     SizedBox(height: 30.0),
-                        Text("Or sign in using social media",  style: TextStyle(color: Colors.grey),),
+                        Text(Language.Or_sign_in_using_social_media!,  style: TextStyle(color: Colors.grey),),
                         SizedBox(height: 10.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -249,9 +251,9 @@ class _LoginPageState extends State<LoginPagee>{
                               child: Text.rich(
                                 TextSpan(
                                   children: [
-                                    TextSpan(text: "Don't have an account? "),
+                                    TextSpan(text: Language.Dont_have_an_account),
                                     TextSpan(
-                                      text: 'Create',
+                                      text: Language.Create,
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = (){
                                           Navigator.push(context, MaterialPageRoute<Widget>(builder: (context) => RegistrationPage()));

@@ -22,6 +22,16 @@ class DataBaseConfiguration
         return json.decode(response.body) as Map<String, dynamic>;
   
   }
+  static Future <bool> email_test(String email) async{
+   const String key='subdomain';
+    const String filename='email_test.php';
+    const String url='http://'+key+'.sc3qtsk5128.universe.wf/'+ filename;
+      http.Response response = await http.post(Uri.parse(url),body: {
+       'email': email,
+    }); 
+        return response.body.toString()!='false';
+  
+  }
 static Future <bool>login(UserManagement user) async{
    const String key='subdomain';
     const String filename='login.php';

@@ -27,8 +27,9 @@ class UserManagementHelper {
   static Future<bool> login(UserManagement user) async {
     final bool rightCredentials;
     try {
+      
+ 
    final String pass =  await DataBaseConfiguration.sec_login(user) ;
-   print(pass);
     if(pass=='false'){
       rightCredentials =false ;
       }else{

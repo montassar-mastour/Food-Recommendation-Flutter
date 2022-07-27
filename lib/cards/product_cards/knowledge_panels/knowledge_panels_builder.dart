@@ -101,38 +101,6 @@ class KnowledgePanelsBuilder {
                 ?.contains('en:nutrition-facts-to-be-completed') ??
             false;
         final AppLocalizations appLocalizations = AppLocalizations.of(context)!;
-        knowledgePanelElementWidgets.add(
-          addPanelButton(
-            nutritionAddOrUpdate
-                ? appLocalizations.score_add_missing_nutrition_facts
-                : appLocalizations.score_update_nutrition_facts,
-            iconData: nutritionAddOrUpdate ? Icons.add : Icons.edit,
-            onPressed: () async {
-              final LocalDatabase localDatabase = context.read<LocalDatabase>();
-              final OrderedNutrientsCache cache =
-                  OrderedNutrientsCache(localDatabase);
-              final OrderedNutrients? orderedNutrients = await cache.get() ??
-                  await LoadingDialog.run<OrderedNutrients>(
-                    context: context,
-                    future: cache.download(),
-                  );
-              if (orderedNutrients == null) {
-                await LoadingDialog.error(context: context);
-                return;
-              }
-              await Navigator.push<Widget>(
-                context,
-                MaterialPageRoute<Widget>(
-                  builder: (BuildContext context) => NutritionPageLoaded(
-                    product,
-                    orderedNutrients,
-                  ),
-                ),
-              );
-              // TODO(monsieurtanuki): refresh the data if changed
-            },
-          ),
-        );
         if (product.statesTags?.contains('en:ingredients-to-be-completed') ??
             false) {
           knowledgePanelElementWidgets.add(

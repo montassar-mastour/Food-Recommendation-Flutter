@@ -60,33 +60,33 @@ class _ProductPageState extends State<ProductPage> {
       ),
       appBar: AppBar(
         title: Text(getProductName(_product, appLocalizations)),
-        actions: <Widget>[
-          PopupMenuButton<ProductPageMenuItem>(
-            itemBuilder: (BuildContext context) =>
-                <PopupMenuEntry<ProductPageMenuItem>>[
-              PopupMenuItem<ProductPageMenuItem>(
-                value: ProductPageMenuItem.WEB,
-                child: Text(appLocalizations.label_web),
-              ),
-              PopupMenuItem<ProductPageMenuItem>(
-                value: ProductPageMenuItem.REFRESH,
-                child: Text(appLocalizations.label_refresh),
-              ),
-            ],
-            onSelected: (final ProductPageMenuItem value) async {
-              switch (value) {
-                case ProductPageMenuItem.WEB:
-                  LaunchUrlHelper.launchURL(
-                      'https://openfoodfacts.org/product/${_product.barcode}/',
-                      false);
-                  break;
-                case ProductPageMenuItem.REFRESH:
-                  _refreshProduct(context);
-                  break;
-              }
-            },
-          ),
-        ],
+        // actions: <Widget>[
+        //   PopupMenuButton<ProductPageMenuItem>(
+        //     itemBuilder: (BuildContext context) =>
+        //         <PopupMenuEntry<ProductPageMenuItem>>[
+        //       PopupMenuItem<ProductPageMenuItem>(
+        //         value: ProductPageMenuItem.WEB,
+        //         child: Text(appLocalizations.label_web),
+        //       ),
+        //       PopupMenuItem<ProductPageMenuItem>(
+        //         value: ProductPageMenuItem.REFRESH,
+        //         child: Text(appLocalizations.label_refresh),
+        //       ),
+        //     ],
+        //     onSelected: (final ProductPageMenuItem value) async {
+        //       switch (value) {
+        //         case ProductPageMenuItem.WEB:
+        //           LaunchUrlHelper.launchURL(
+        //               'https://openfoodfacts.org/product/${_product.barcode}/',
+        //               false);
+        //           break;
+        //         case ProductPageMenuItem.REFRESH:
+        //           _refreshProduct(context);
+        //           break;
+        //       }
+        //     },
+        //   ),
+        // ],
       ),
       body: _buildProductBody(context),
     );

@@ -49,9 +49,9 @@ class SmoothProductCardFound extends StatelessWidget {
     final double iconSize = IconWidgetSizer.getIconSizeFromContext(context);
     final List<Attribute> attributes =
         getPopulatedAttributes(product, SCORE_ATTRIBUTE_IDS);
-    for (final Attribute attribute in attributes) {
-      scores.add(SvgIconChip(attribute.iconUrl!, height: iconSize));
-    }
+    // for (final Attribute attribute in attributes) {
+    // //   scores.add(SvgIconChip(attribute.iconUrl!, height: iconSize));
+    // }
     return GestureDetector(
       onTap: onTap ??
           () async {

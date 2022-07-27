@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:smooth_app/Data_Base_Api/D_B_configuration.dart';
+import 'package:smooth_app/language/language.dart';
 import 'package:smooth_app/pages/sign_pages/profil_page2.dart';
 
 import 'header_widget.dart';
@@ -21,10 +22,11 @@ class _ProfilePageState extends State<ProfilePage>{
 
   @override
   Widget build(BuildContext context) {
+    Language.build(context);
   setState(() {});
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile Page',
+        title:  Text(Language.profil_page!,
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         elevation: 0.5,
@@ -82,8 +84,8 @@ class _ProfilePageState extends State<ProfilePage>{
                           Container(
                           padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
                           alignment: Alignment.topLeft,
-                          child: const Text(
-                            'User Information',
+                          child:  Text(
+                            Language.User_Information!,
                             style: TextStyle(
                               color: Colors.black87,
                               fontWeight: FontWeight.w500,
@@ -100,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage>{
                           Navigator.push(context, MaterialPageRoute<Widget>(builder: (BuildContext context) => ProfilPage2()));
                          },
                          // ignore: prefer_const_constructors
-                         child: Text('Modify'),
+                         child: Text(Language.Modify!),
                          ),
                         ),]
                         )
@@ -118,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage>{
                                       tiles: [
                                          ListTile(
                                           leading: Icon(Icons.calendar_month),
-                                          title: Text('Age'),
+                                          title: Text(Language.age!),
                                           subtitle: Text(Data['age'].toString()),
                                         ),
                                          ListTile(  
@@ -127,7 +129,7 @@ class _ProfilePageState extends State<ProfilePage>{
                                            height: 20,
                                             child:  Image.asset('assets/app/length_3926.ico')
                                         ),
-                                           title: Text('Length'),
+                                           title: Text(Language.length!),
                                           subtitle: Text(Data['length'].toString()),
                                         ),
                                         ListTile(
@@ -137,12 +139,12 @@ class _ProfilePageState extends State<ProfilePage>{
                                             child:  Image.asset('assets/app/scale_weight_3065.ico', color: Colors.grey,) ,
                                             
                                         ),
-                                          title: Text('Weight'),
+                                          title: Text(Language.weight!),
                                           subtitle: Text(Data['weight'].toString()),
                                         ),
                                          ListTile(
                                           leading: Icon(Icons.email),
-                                          title: Text('Email'),
+                                          title: Text(Language.email!),
                                           subtitle: Text(Data['email'].toString()),
                                         ),
                                       ],
