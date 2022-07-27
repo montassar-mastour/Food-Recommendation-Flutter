@@ -198,7 +198,7 @@ class _SummaryCardState extends State<SummaryCard> {
           borderRadius:
               const BorderRadius.vertical(bottom: SmoothCard.CIRCULAR_RADIUS),
           child: OverflowBox(
-            alignment: AlignmentDirectional.topStart,
+            alignment: AlignmentDirectional.topEnd,
             minHeight: parentHeight,
             maxHeight: double.infinity,
             child: buildProductSmoothCard(
@@ -339,34 +339,9 @@ class _SummaryCardState extends State<SummaryCard> {
       children: <Widget>[
         ProductTitleCard(widget._product),
         for (final Attribute attribute in scoreAttributes)
-          ScoreCard(
-            iconUrl: attribute.iconUrl,
-            description: 'NUTRI-SCORE',
-            cardEvaluation: getCardEvaluationFromAttribute(attribute),
-          ),
+          
         _buildProductQuestionsWidget(),
         attributesContainer,
-        if (widget._product.statesTags
-                ?.contains('en:categories-to-be-completed') ??
-            false)
-          addPanelButton(appLocalizations.score_add_missing_product_category,
-              onPressed: () {}),
-        if (categoryTag != null && categoryLabel != null)
-          addPanelButton(
-            appLocalizations.product_search_same_category,
-            iconData: Icons.leaderboard,
-            onPressed: () async => ProductQueryPageHelper().openBestChoice(
-              color: Colors.deepPurple,
-              heroTag: 'search_bar',
-              name: categoryLabel,
-              localDatabase: localDatabase,
-              productQuery: CategoryProductQuery(
-                categoryTag: widget._product.categoriesTags!.last,
-                size: 500,
-              ),
-              context: context,
-            ),
-          ),
       ],
     );
   }

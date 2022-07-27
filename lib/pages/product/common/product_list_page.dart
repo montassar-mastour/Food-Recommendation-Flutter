@@ -98,13 +98,6 @@ class _ProductListPageState extends State<ProductListPage> {
                   overflow: TextOverflow.fade,
                 ),
               ),
-            if ((!_selectionMode) && products.isNotEmpty)
-              Flexible(
-                child: ElevatedButton(
-                  child: Text(appLocalizations.compare_products_mode),
-                  onPressed: () => setState(() => _selectionMode = true),
-                ),
-              ),
           ],
         ),
       ),
@@ -137,12 +130,6 @@ class _ProductListPageState extends State<ProductListPage> {
                     ),
                     child: Row(
                       children: <Widget>[
-                        if (_selectionMode)
-                          Icon(
-                            selected
-                                ? Icons.check_box
-                                : Icons.check_box_outline_blank,
-                          ),
                         Expanded(
                           child: ProductListItemSimple(
                             product: product,

@@ -18,6 +18,8 @@ class WelcomePage extends StatelessWidget {
     // Side padding is 8% of total width.
     final double sidePadding = MediaQuery.of(context).size.width * .08;
 Language.build(context);
+final double screenWidth =
+        MediaQuery.of(context).size.width - 2 * 16.0;
     return Scaffold(
       body: Stack(children: <Widget>[
         Padding(
@@ -27,16 +29,21 @@ Language.build(context);
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+                SizedBox(
+          width: screenWidth * .900,
+          height: 800,
+          child:Image.asset('assets/app/Welcome.png') , 
+        ),
               const Spacer(flex: 3),
-              Flexible(
-                flex: 6,
-                child: Text('                ${Language.welcome!}', style: headlineStyle,textAlign: TextAlign.center),
-              ),
-              Flexible(
-                flex: 3,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const <Widget>[
+              // Flexible(
+              //   flex: 6,
+              //   child: Text('                ${Language.welcome!}', style: headlineStyle,textAlign: TextAlign.center),
+              // ),
+              // Flexible(
+              //   flex: 3,
+              //   child: Column(
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+                  // children: const <Widget>[
                     // Padding(
                     //   padding: const EdgeInsets.only(left: SMALL_SPACE),
                     //   child: Text(
@@ -70,9 +77,9 @@ Language.build(context);
                     //     style: bodyTextStyle,
                     //   ),
                     // ),
-                  ],
-                ),
-              ),
+                  // ],
+              //   ),
+              // ),
             ],
           ),
         ),
