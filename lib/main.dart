@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:camera/camera.dart';
-import 'package:device_preview/device_preview.dart';
+// import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -26,7 +26,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-  if (kReleaseMode) {
+  // if (kReleaseMode) {
     await SentryFlutter.init(
       (SentryOptions options) {
         options.dsn =
@@ -43,9 +43,9 @@ Future<void> main() async {
       url: 'https://analytics.openfoodfacts.org/',
     );
     */
-  } else {
-    runApp(DevicePreview(enabled: true, builder: (_) => const SmoothApp()));
-  }
+  // } else {
+  //   runApp(DevicePreview(enabled: true, builder: (_) => const SmoothApp()));
+  // }
 }
 
 class SmoothApp extends StatefulWidget {
