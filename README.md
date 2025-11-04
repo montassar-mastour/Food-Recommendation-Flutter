@@ -85,7 +85,9 @@ The app was developed following the **Waterfall Model**, with the following key 
 
 <p align="center">
   <img src="assets/screens/login.png" width="200" />
-    <img src="assets/screens/scan.png" width="200" />
+  <img src="assets/screens/scan.png" width="200" />
+</p>
+<p align="center">
   <img src="assets/screens/preferences.png" width="200">
   <img src="assets/screens/product.png" width="200" />
 </p>
