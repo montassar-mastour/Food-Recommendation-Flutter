@@ -1,0 +1,218 @@
+<svg viewBox="0 0 1200 850" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4A90E2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#357ABD;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#50C878;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3DA65D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#E67E22;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#CA6510;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#9B59B6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7D3C98;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#2C3E50" />
+    </marker>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="850" fill="#F8F9FA"/>
+  
+  <!-- Title -->
+  <text x="600" y="40" font-family="Arial, sans-serif" font-size="26" font-weight="bold" fill="#2C3E50" text-anchor="middle">
+    Hassassia System Architecture
+  </text>
+  
+  <!-- Layer 1: Mobile Application -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="90" width="260" height="200" rx="10" fill="url(#grad1)" stroke="#2C5AA0" stroke-width="2"/>
+    <text x="180" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">
+      Mobile Application
+    </text>
+    <text x="180" y="140" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      (Flutter/Dart)
+    </text>
+    
+    <rect x="70" y="160" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="180" y="180" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Authentication
+    </text>
+    
+    <rect x="70" y="195" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="180" y="215" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Preference Management
+    </text>
+    
+    <rect x="70" y="230" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="180" y="250" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Product Search
+    </text>
+    
+    <rect x="70" y="265" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="180" y="285" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Barcode Scanning
+    </text>
+  </g>
+  
+  <!-- Layer 2: Backend Server -->
+  <g filter="url(#shadow)">
+    <rect x="470" y="90" width="260" height="200" rx="10" fill="url(#grad2)" stroke="#2E8B57" stroke-width="2"/>
+    <text x="600" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">
+      Backend Server
+    </text>
+    <text x="600" y="140" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      (PHP)
+    </text>
+    
+    <rect x="490" y="160" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="600" y="180" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Data Synchronization
+    </text>
+    
+    <rect x="490" y="195" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="600" y="215" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      API Endpoints
+    </text>
+    
+    <rect x="490" y="230" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="600" y="250" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      CRUD Operations
+    </text>
+    
+    <rect x="490" y="265" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="600" y="285" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Secure Data Transfer
+    </text>
+  </g>
+  
+  <!-- Layer 3: External API -->
+  <g filter="url(#shadow)">
+    <rect x="890" y="90" width="260" height="200" rx="10" fill="url(#grad3)" stroke="#C65D0D" stroke-width="2"/>
+    <text x="1020" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">
+      External API
+    </text>
+    <text x="1020" y="140" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      (Open Food Facts)
+    </text>
+    
+    <rect x="910" y="165" width="220" height="35" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="1020" y="190" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Product Details
+    </text>
+    
+    <rect x="910" y="208" width="220" height="35" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="1020" y="233" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Ingredients &amp; Additives
+    </text>
+    
+    <rect x="910" y="251" width="220" height="35" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="1020" y="276" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Allergen Information
+    </text>
+  </g>
+  
+  <!-- Layer 4: Databases -->
+  <g filter="url(#shadow)">
+    <!-- Local Database -->
+    <rect x="130" y="370" width="260" height="160" rx="10" fill="url(#grad4)" stroke="#6C3483" stroke-width="2"/>
+    <text x="260" y="400" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">
+      Local NoSQL Database
+    </text>
+    <text x="260" y="420" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">
+      (On Device)
+    </text>
+    
+    <rect x="150" y="440" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="260" y="460" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Session Data
+    </text>
+    
+    <rect x="150" y="475" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="260" y="495" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      User Preferences
+    </text>
+    
+    <rect x="150" y="510" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="260" y="530" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Offline Cache
+    </text>
+  </g>
+  
+  <g filter="url(#shadow)">
+    <!-- Remote Database -->
+    <rect x="810" y="370" width="260" height="160" rx="10" fill="url(#grad4)" stroke="#6C3483" stroke-width="2"/>
+    <text x="940" y="400" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">
+      Remote SQL Database
+    </text>
+    <text x="940" y="420" font-family="Arial, sans-serif" font-size="11" fill="white" text-anchor="middle">
+      (phpMyAdmin/cPanel)
+    </text>
+    
+    <rect x="830" y="440" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="940" y="460" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      User Accounts
+    </text>
+    
+    <rect x="830" y="475" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="940" y="495" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Product History
+    </text>
+    
+    <rect x="830" y="510" width="220" height="28" rx="5" fill="rgba(255,255,255,0.2)"/>
+    <text x="940" y="530" font-family="Arial, sans-serif" font-size="12" fill="white" text-anchor="middle">
+      Cross-Device Sync
+    </text>
+  </g>
+  
+  <!-- Connection Arrows -->
+  <!-- Mobile to Backend -->
+  <line x1="310" y1="190" x2="470" y2="190" stroke="#2C3E50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="390" y="180" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2C3E50" text-anchor="middle">HTTP</text>
+  
+  <!-- Backend to External API -->
+  <line x1="730" y1="190" x2="890" y2="190" stroke="#2C3E50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  <text x="810" y="180" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2C3E50" text-anchor="middle">API Request</text>
+  
+  <!-- Mobile to Local DB -->
+  <line x1="180" y1="290" x2="260" y2="370" stroke="#2C3E50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Backend to Remote DB -->
+  <line x1="600" y1="290" x2="940" y2="370" stroke="#2C3E50" stroke-width="3" marker-end="url(#arrowhead)"/>
+  
+  <!-- Local to Remote DB (Sync) -->
+  <line x1="390" y1="450" x2="810" y2="450" stroke="#2C3E50" stroke-width="2" stroke-dasharray="8,5" marker-end="url(#arrowhead)"/>
+  <text x="600" y="440" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#2C3E50" text-anchor="middle">Synchronization</text>
+  
+  <!-- Data Flow Section -->
+  <g filter="url(#shadow)">
+    <rect x="50" y="600" width="1100" height="200" rx="10" fill="#34495E" stroke="#2C3E50" stroke-width="2"/>
+    <text x="600" y="635" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle">
+      Data Flow &amp; Interaction Process
+    </text>
+    
+    <text x="80" y="670" font-family="Arial, sans-serif" font-size="13" fill="#ECF0F1">
+      1. User scans barcode or performs text search in the mobile application
+    </text>
+    <text x="80" y="700" font-family="Arial, sans-serif" font-size="13" fill="#ECF0F1">
+      2. Flutter app checks local NoSQL database for existing cached data
+    </text>
+    <text x="80" y="730" font-family="Arial, sans-serif" font-size="13" fill="#ECF0F1">
+      3. If not found locally, request is sent to Open Food Facts API via PHP backend server
+    </text>
+    <text x="80" y="760" font-family="Arial, sans-serif" font-size="13" fill="#ECF0F1">
+      4. API response is processed and both local and remote databases are updated
+    </text>
+    <text x="80" y="790" font-family="Arial, sans-serif" font-size="13" fill="#ECF0F1">
+      5. Backend ensures data synchronization and manages user profile interactions
+    </text>
+  </g>
+</svg>
